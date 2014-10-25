@@ -1,5 +1,5 @@
 ## htmltable: Hassle-free HTML tables in R
-htmltable is a package for parsing and assembling HTML tables in R. It is similiar to XML's ´readHTMLTable()´ but provides additionally that two major advantages: 
+*htmltable* is a package for parsing and assembling HTML tables in R. It is similiar to *XML*'s ´readHTMLTable()´ but provides two major advantages: 
 
 1. Automatic adjustment for row- and columnspans, 
 2. Finer control over the conversion of cell content into the R object.  
@@ -13,7 +13,7 @@ devtools::install_github("crubba/htmltable")
 ```
 
 ## Usage
-To see ´htmltable´ in action, take a look at the case studies in the package vignette.
+To see *htmltable* in action, take a look at the case studies in the package vignette.
 
 ## Development
-htmltable is still in an early development stage and its functions may be subject to significant change in future versions. Any bug reports/feature requests are highly appreciated.
+*htmltable* is still in an early development stage and its functions may be subject to significant change in future versions. Any bug reports/feature requests are highly appreciated.
