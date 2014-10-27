@@ -11,19 +11,23 @@
 #' @param ... additional arguments
 #' @return A list The sum of \code{x} and \code{y}.
 #' @examples
-#' add(1, 1)
-#' add(10, 1)
+#'
+#' This table lacks header information
+#' We pass NULL to skip the header generation step
+#' url <- "http://apps.who.int/immunization_monitoring/globalsummary/timeseries/tswucoveragebcg.html"
+#' htmltable(doc = url, which = "/html/body/div/table[3]", header = NULL)
+#'
+#'
+#' This example illustrates extracting multiple tables
+#' url <-
 htmltable <- function(doc,
-                      which = NULL, #which
+                      which = NULL,
                       header = NULL,
                       headerSep = c(" >1> ", " >2> ", " >3> ", " >4> "),
                       body = NULL,
                       elFun = function(node)XML::xmlValue(node),
                       colClasses = NULL,
                       as.data.frame = TRUE, ...){
-
-  library(magrittr)
-  library(XML)
 
   # Check Inputs ---------------------------
   Node <- check_type(doc, which)
@@ -71,9 +75,10 @@ htmltable <- function(doc,
 
   tab <- as.data.frame(tab, stringsAsFactors = F)
 
+  tab.list[[i]] <- tab
+
   }
 
-  tab.list[[i]] <- tab
 
 
   return(tab.list)
