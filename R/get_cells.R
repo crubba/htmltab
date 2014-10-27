@@ -1,11 +1,26 @@
-#Assert if table has <tag>
+
+#' Assert a specific tag in an XML node
+#'
+#' @param Node the HTML document which can be a file name or a URL or an already parsed HTMLInternalDocument, or an HTML node of class XMLInternalElementNode, or a character vector containing the HTML content to parse and process
+#' @param tag a character string for the tag name to be matched
+#' @return logical
+#' @examples
+#' add(1, 1)
+#' add(10, 1)
 has_tag <- function(Node, tag) {
   x <- unlist(XML::xpathSApply(Node, "//*", XML::xmlName)) #probably wrong
   any(x == tag) #tag %in% x
 }
 
 
-#get cell xpath
+#' Construct an XPath expression for the body cells
+#'
+#' @param body a cha
+#' @param Node the HTML document which can be a file name or a URL or an already parsed HTMLInternalDocument, or an HTML node of class XMLInternalElementNode, or a character vector containing the HTML content to parse and process
+#' @return logical
+#' @examples
+#' add(1, 1)
+#' add(10, 1)
 get_cell_xpath <- function(body, Node){
 
   if(is.character(body)){
