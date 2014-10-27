@@ -21,7 +21,7 @@ has_tag <- function(Node, tag) {
 #' @examples
 #' add(1, 1)
 #' add(10, 1)
-get_cell_xpath <- function(body, Node){
+get_cell_xpath <- function(Node, body){
 
   if(is.character(body)){
     cell.xpath <- body}

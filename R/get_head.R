@@ -27,8 +27,8 @@ get_xpath_header <- function(Node, header){
     header.xpath <- sprintf("tr[%s]", header.xpath)
   }
 
-  thead <- has_tag(Node, "thead") #check if has thead, list
-  th <- has_tag(Node, "th") #check if has th, list
+  thead <- has_tag(Node[[i]], "thead") #check if has thead, list
+  th <- has_tag(Node[[i]], "th") #check if has th, list
 
   if(thead && is.null(header)) { #check sequence of statements
     header.xpath <- "thead/tr"}

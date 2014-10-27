@@ -30,6 +30,7 @@ check_type <- function(doc, which){
     if (is.numeric(which)) {
       Node <- XML::getNodeSet(parsed_doc, path = sprintf("//table[%i]", which))
     }
+
     if (!is.numeric(which) & !is.character(which)) {
       Node <- XML::getNodeSet(parsed_doc, path = "//table")
     }
