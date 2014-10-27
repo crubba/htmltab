@@ -1,5 +1,5 @@
 ## htmltable: Hassle-free HTML tables in R
-*htmltable* is a package for parsing and assembling HTML tables in R. It is similiar to *XML*'s ´readHTMLTable()´ but provides two major advantages: 
+*htmltable* is a package for parsing and assembling HTML tables in R. It is similiar to *XML*'s _readHTMLTable_() but provides two major advantages: 
 
 1. Automatic adjustment for row- and columnspans, 
 2. Finer control over the conversion of cell content into the R object.  
