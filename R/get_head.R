@@ -6,7 +6,7 @@ get_head <- function(Node, header) {
 
   #Retrieve header elements, account for weird header structures
   head <- lapply(1:length(header.xpath), function(xp) {
-    xpath.return <- XML::xpathSApply(Node[[1]], header.xpath[xp])
+    xpath.return <- XML::xpathSApply(Node, header.xpath[xp]) #list
     return(xpath.return)
   }
   ) %>% unlist
@@ -19,14 +19,16 @@ get_head <- function(Node, header) {
 get_xpath_header <- function(Node, header){
 
   if(is.character(header)){
-    header.xpath = header}
+    header.xpath = header
+  }
 
   if(is.numeric(header)) {
     header.xpath <- sapply(1:length(header), function(pos) sprintf("position() = %s", header[pos])) %>% paste(., collapse = " or ")
-    header.xpath <- sprintf("tr[%s]", header.xpath)}
+    header.xpath <- sprintf("tr[%s]", header.xpath)
+  }
 
-  thead <- has_tag(Node[[1]], "thead") #check if has thead
-  th <- has_tag(Node[[1]], "th") #check if has th
+  thead <- has_tag(Node, "thead") #check if has thead, list
+  th <- has_tag(Node, "th") #check if has th, list
 
   if(thead && is.null(header)) { #check sequence of statements
     header.xpath <- "thead/tr"}

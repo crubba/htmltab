@@ -26,8 +26,8 @@ get_cell_xpath <- function(body, Node){
   if(is.character(body)){
     cell.xpath <- body}
 
-  tbody <- has_tag(Node[[1]], "tbody") #does table node has tbody?
-  td <- has_tag(Node[[1]], "td") #does table node has <td> tags?
+  tbody <- has_tag(Node, "tbody") #does table node has tbody?, list
+  td <- has_tag(Node, "td") #does table node has <td> tags?, list
 
   if (is.numeric(body) && tbody){ #check to have header checked (cell.xpath <- sprintf("tr[position() > %s]", max(header)))
     cell.xpath <- lapply(body, function(x) sprintf("tbody/tr[position() = %s]", x)) %>% paste(., collapse= " | ")
@@ -50,7 +50,7 @@ get_cells <- function(Node, body) {
   cell.xpath <- get_cell_xpath(body = body, Node = Node)
 
   cells <- lapply(1:length(cell.xpath), function(xpath) {
-    XML::xpathSApply(Node[[1]], cell.xpath[[xpath]])
+    XML::xpathSApply(Node, cell.xpath[[xpath]])
   })  %>% unlist
 
   return(cells)

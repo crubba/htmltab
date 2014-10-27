@@ -29,10 +29,13 @@ htmltable <- function(doc,
   Node <- check_type(doc, which)
 
 
+  tab.list <- list()
+  for(i in 1:length(Node)) {
+
   # Create Header ---------------------------
 
   #Retrieve Head Elements
-  head <- get_head(Node, header = header)
+  head <- get_head(Node[[i]], header = header)
 
   # Header Position
   #header.position <- get_header_position(header = header, header.)
@@ -48,7 +51,7 @@ htmltable <- function(doc,
   # Create Body ---------------------------
 
   #Get Body Cell Nodes
-  cells <- get_cells(Node, body = body) #change header to header.location
+  cells <- get_cells(Node[[i]], body = body) #change header to header.location
 
   #Extract and transform body cell elements
   vals <- get_cell_element(cells, elFun = elFun)
@@ -68,6 +71,10 @@ htmltable <- function(doc,
 
   tab <- as.data.frame(tab, stringsAsFactors = F)
 
+  }
 
-  return(tab)
+  tab.list[[i]] <- tab
+
+
+  return(tab.list)
 }

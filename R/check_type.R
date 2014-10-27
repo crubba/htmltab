@@ -7,22 +7,34 @@
 
 check_type <- function(doc, which){
 
+
+  #XML input
+  if(class(doc) == "HTMLInternalDocument") {
+    Node <- xml::getNodeSet(doc, "//table") #returns all tables
+    }
+
+  #doc is list of parsed table nodes
+  if(is.list(doc)) {
+    Node <- doc
+  }
+
   #URL input
   if(is.character(doc)) {
 #    if(!grepl("^www|^http", doc)) stop("Invalid 'doc' input: String is no URL") #doesnt work for files saved on hard drive
-    Node <- XML::htmlParse(doc)
-    } else if(class(doc) == "HTMLInternalDocument") {
-      Node <- doc
+    parsed_doc <- XML::htmlParse(doc)
+
+    if (is.character(which)) {
+      Node <- XML::getNodeSet(parsed_doc, path = which)
     }
 
-  #Check if table xpath specified
-  if(!is.null(which)) {
-    if(is.character(which)) {
-      Node <- XML::getNodeSet(Node, path = which)
+    if (is.numeric(which)) {
+      Node <- XML::getNodeSet(parsed_doc, path = sprintf("//table[%i]", which))
     }
-    if(is.numeric(which)){
-      Node <- XML::getNodeSet(Node, path = sprintf("//table[%i]", which))
+    if (!is.numeric(which) & !is.character(which)) {
+      Node <- XML::getNodeSet(parsed_doc, path = "//table")
     }
+  } else {
+    stop("doc is of unknown type")
   }
 
   return(Node)
