@@ -13,7 +13,7 @@ devtools::install_github("crubba/htmltable")
 ```
 
 ## Usage
-To see *htmltable* in action, take a look at the case studies in the package vignette.
+To see *htmltable* in action, take a look at the case studies in the package [vignette](http://crubba.github.io/htmltable/).
 
 ## Development
-*htmltable* is still in an early development stage and its functions may be subject to significant change in future versions. Any bug reports/feature requests are highly appreciated.
+*htmltable* is still in an early development stage and its functions may be subject to significant change in future versions. Any bug reports/feature suggestions are highly appreciated.
