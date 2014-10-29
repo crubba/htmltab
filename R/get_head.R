@@ -1,12 +1,12 @@
 #Retrieve Head
-get_head <- function(Node, header) {
+get_head <- function(table.Node, header) {
 
   #Produce XPATH
-  header.xpath <- get_xpath_header(Node, header = header) #return: vector (char, 1-)
+  header.xpath <- get_xpath_header(table.Node, header = header) #return: vector (char, 1-)
 
   #Retrieve header elements, account for weird header structures
   head <- lapply(1:length(header.xpath), function(xp) {
-    xpath.return <- XML::xpathSApply(Node, header.xpath[xp]) #list
+    xpath.return <- XML::xpathSApply(table.Node, header.xpath[xp]) #list
     return(xpath.return)
   }
   ) %>% unlist
@@ -16,7 +16,7 @@ get_head <- function(Node, header) {
 
 
 #Assess which XPath to use
-get_xpath_header <- function(Node, header){
+get_xpath_header <- function(table.Node, header){
 
   if(is.character(header)){
     header.xpath = header
@@ -27,14 +27,15 @@ get_xpath_header <- function(Node, header){
     header.xpath <- sprintf("tr[%s]", header.xpath)
   }
 
-  thead <- has_tag(Node[[i]], "thead") #check if has thead, list
-  th <- has_tag(Node[[i]], "th") #check if has th, list
+  thead <- has_tag(table.Node, "thead") #check if has thead, list
+  th <- has_tag(table.Node, "th") #check if has th, list
 
   if(thead && is.null(header)) { #check sequence of statements
     header.xpath <- "thead/tr"}
 
   if (!thead && is.null(header) && th){
-    header.xpath <- "tr[th]"}
+    header.xpath <- "tr[th]"} #doesnt work with NZ toplevel, needs */tr[th]
+
 
   # if(exists(header.xpath)) {
   # warnings("No usuable header information. Skipping header generation")

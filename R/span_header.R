@@ -20,7 +20,8 @@ span_header <- function(header.names, header.colspans, header.rowspans, headerSe
       length.col <- header.colspans[[row]][1]
       header.colspans[[row]] <- append(header.colspans[[row]], rep(1, length.col - 1), 1)
       header.rowspans[[row]] <- append(header.rowspans[[row]], rep(header.rowspans[[row]][1], length.col - 1), 1)
-      header.names[[row]] <- append(header.names[[row]], rep(header.names[[row]][1], length.col - 1), 1)
+      add.cols <- rep(header.names[[row]][1], length.col - 1) #paste(header.names[[row]][1], 1:length.col - 1, sep = ".")
+      header.names[[row]] <- append(header.names[[row]], add.cols, 1)
 
       #remove the just introduced cell infos
       header.colspans[[row]] <- header.colspans[[row]][-1] #check for colspans different

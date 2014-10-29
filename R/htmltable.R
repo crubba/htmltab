@@ -1,5 +1,5 @@
 
-#' Assemble information from HTML tables.
+#' Assemble information from HTML tables
 #'
 #' @param doc the HTML document which can be a file name or a URL or an already parsed HTMLInternalDocument, or an HTML node of class XMLInternalElementNode, or a character vector containing the HTML content to parse and process.
 #' @param which a vector identifying which tables to return from within the document (when such was specified). Either a numeric vector for the tables' rank or a character vector specifiying an XPath for the tables.
@@ -9,7 +9,7 @@
 #' @param cellFun a list of functions that is executed over the header and body cell nodes.
 #' @param colClasses a vector of classes for the columns.
 #' @param ... additional arguments
-#' @return A list The sum of \code{x} and \code{y}.
+#' @return A list of R data frames (if as.data.frame is left at its default value).
 #' @examples
 #'
 #' This table lacks header information
@@ -36,10 +36,12 @@ htmltable <- function(doc,
   tab.list <- list()
   for(i in 1:length(Node)) {
 
+    table.Node <- Node[[i]]
+
   # Create Header ---------------------------
 
   #Retrieve Head Elements
-  head <- get_head(Node[[i]], header = header)
+  head <- get_head(table.Node = table.Node, header = header)
 
   # Header Position
   #header.position <- get_header_position(header = header, header.)
@@ -55,7 +57,7 @@ htmltable <- function(doc,
   # Create Body ---------------------------
 
   #Get Body Cell Nodes
-  cells <- get_cells(Node[[i]], body = body) #change header to header.location
+  cells <- get_cells(table.Node = table.Node, body = body) #change header to header.location
 
   #Extract and transform body cell elements
   vals <- get_cell_element(cells, elFun = elFun)
@@ -79,7 +81,8 @@ htmltable <- function(doc,
 
   }
 
-
+  #Return df if only single tab
+  if(length(tab.list) == 1) tab.list <- tab.list[[1]]
 
   return(tab.list)
 }
