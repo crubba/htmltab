@@ -24,11 +24,13 @@ check_type <- function(doc, which){
     parsed_doc <- XML::htmlParse(doc)
 
     if (is.character(which)) {
-      Node <- XML::getNodeSet(parsed_doc, path = which)
+      xpath <- which %>% paste(., collapse = " | ")
+      Node <- XML::getNodeSet(parsed_doc, path = xpath) #needs to work for vector which input
     }
 
     if (is.numeric(which)) {
-      Node <- XML::getNodeSet(parsed_doc, path = sprintf("//table[%i]", which))
+      xpath <-  sprintf("//table[%i]", num) %>% paste(., collapse = " | ")
+      Node <- XML::getNodeSet(parsed_doc, path = xpath) #needs to work for vector which input
     }
 
     if (!is.numeric(which) & !is.character(which)) {
