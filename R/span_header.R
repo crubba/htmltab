@@ -45,7 +45,7 @@ span_header <- function(header.names, header.colspans, header.rowspans, headerSe
         header.rowspans[[level]] <- append(header.rowspans[[level]], rep(header.rowspans[[row]][1], length.col - 1), 1) # replace header.rowspans[[row]][1] by 1
         header.names[[level]] <- append(header.names[[level]], rep(header.names[[level]][1], length.col - 1), 1)
 
-        if(level > 1) {name <- paste(name, header.names[[level]][1], sep = headerSep[level])}
+        if(level > 1) {name <- paste(name, header.names[[level]][1], sep = headerSep)}
 
         #remove the just introduced cell infos
         header.colspans[[level]] <- header.colspans[[level]][-1] #check for colspans different

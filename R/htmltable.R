@@ -23,7 +23,7 @@
 htmltable <- function(doc,
                       which = NULL,
                       header = NULL,
-                      headerSep = c(" >1> ", " >2> ", " >3> ", " >4> "),
+                      headerSep = " >> ",
                       body = NULL,
                       elFun = function(node)XML::xmlValue(node),
                       colClasses = NULL,
