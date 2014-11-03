@@ -7,9 +7,11 @@ span_header <- function(header.names, header.colspans, header.rowspans, headerSe
   col <- 1
   n.row <- length(header.names) #How many rows has the table? Maybe wrong under some circumstances when last row has rowspans > 2
 
-  while(length(header.names[[2]]) == 0){#tests if misspecified table rows
+  repeat{#tests if misspecified table rows
 
-    if(header.rowspans[[1]][1] == n.row){#Does the cell span entire column?
+    if(length(header.names[[2]]) == 0){break} #test for misspecified tables
+
+    if(header.rowspans[[1]][1] == n.row){ #Does the cell span entire column?
 
       #create the header cell name
       header.name.table <- append(header.name.table, header.names[[1]][1], length(header.name.table))
