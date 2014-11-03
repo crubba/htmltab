@@ -32,7 +32,6 @@ htmltable <- function(doc,
   # Check Inputs ---------------------------
   Node <- check_type(doc, which)
 
-
   tab.list <- list()
   for(i in 1:length(Node)) {
 

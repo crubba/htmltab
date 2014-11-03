@@ -7,10 +7,9 @@
 
 check_type <- function(doc, which){
 
-
   #XML input
-  if(class(doc) == "HTMLInternalDocument") {
-    Node <- xml::getNodeSet(doc, "//table") #returns all tables
+  if("HTMLInternalDocument" %in% class(doc)) {
+    Node <- XML::getNodeSet(doc, "//table") #returns all tables
     }
 
   #doc is list of parsed table nodes
@@ -36,9 +35,9 @@ check_type <- function(doc, which){
     if (!is.numeric(which) & !is.character(which)) {
       Node <- XML::getNodeSet(parsed_doc, path = "//table")
     }
-  } else {
-    stop("doc is of unknown type")
   }
+
+  if(!exists("Node")) stop("doc is of unknown type")
 
   return(Node)
 }
