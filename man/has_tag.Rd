@@ -3,12 +3,12 @@
 \alias{has_tag}
 \title{Assert a specific tag in an XML node}
 \usage{
-has_tag(Node, tag)
+has_tag(table.Node, tag)
 }
 \arguments{
-\item{Node}{the HTML document which can be a file name or a URL or an already parsed HTMLInternalDocument, or an HTML node of class XMLInternalElementNode, or a character vector containing the HTML content to parse and process}
-
 \item{tag}{a character string for the tag name to be matched}
+
+\item{Node}{the HTML document which can be a file name or a URL or an already parsed HTMLInternalDocument, or an HTML node of class XMLInternalElementNode, or a character vector containing the HTML content to parse and process}
 }
 \value{
 logical

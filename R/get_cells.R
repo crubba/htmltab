@@ -10,9 +10,9 @@ get_cells <- function(table.Node, body) {
 
   cell.xpath <- get_cell_xpath(table.Node = table.Node, body = body)
 
-  cells <- lapply(1:length(cell.xpath), function(xpath) {
+  cells <- unlist(lapply(1:length(cell.xpath), function(xpath) {
     XML::xpathSApply(table.Node, cell.xpath[[xpath]])
-  })  %>% unlist
+  }))
 
   return(cells)
 }
@@ -34,10 +34,12 @@ get_cell_xpath <- function(table.Node, body){
   td <- has_tag(table.Node, "td") #does table node has <td> tags?, list
 
   if (is.numeric(body) && tbody){ #check to have header checked (cell.xpath <- sprintf("tr[position() > %s]", max(header)))
-    cell.xpath <- lapply(body, function(x) sprintf("tbody/tr[position() = %s]", x)) %>% paste(., collapse= " | ")
+    cell.xpath <- lapply(body, function(x) sprintf("tbody/tr[position() = %s]", x))
+    cell.xpath <- paste(cell.xpath, collapse= " | ")
   }
   if (is.numeric(body) && td){
-    cell.xpath <- lapply(body, function(x) sprintf("tr[td][position() = %s]", x)) %>% paste(., collapse= " | ") # does it work for 1:4, -1?
+    cell.xpath <- lapply(body, function(x) sprintf("tr[td][position() = %s]", x))
+    cell.xpath <- paste(cell.xpath, collapse= " | ") # does it work for 1:4, -1?
   }
   if (is.null(body) && tbody && td) {
     cell.xpath <- "tbody/tr"

@@ -5,11 +5,11 @@ get_head <- function(table.Node, header) {
   header.xpath <- get_xpath_header(table.Node, header = header) #return: vector (char, 1-)
 
   #Retrieve header elements, account for weird header structures
-  head <- lapply(1:length(header.xpath), function(xp) {
+  head <- unlist(lapply(1:length(header.xpath), function(xp) {
     xpath.return <- XML::xpathSApply(table.Node, header.xpath[xp]) #list
     return(xpath.return)
   }
-  ) %>% unlist
+  ))
 
   return(head)
 }
@@ -23,7 +23,8 @@ get_xpath_header <- function(table.Node, header){
   }
 
   if(is.numeric(header)) {
-    header.xpath <- sapply(1:length(header), function(pos) sprintf("position() = %s", header[pos])) %>% paste(., collapse = " or ")
+    header.xpath <- sapply(1:length(header), function(pos) sprintf("position() = %s", header[pos]))
+    header.xpath <- paste(header.xpath, collapse = " or ")
     header.xpath <- sprintf("tr[%s]", header.xpath)
   }
 

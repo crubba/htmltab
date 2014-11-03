@@ -3,9 +3,9 @@
 \alias{htmltable}
 \title{Assemble information from HTML tables}
 \usage{
-htmltable(doc, which = NULL, header = NULL, headerSep = c(" >1> ",
-  " >2> ", " >3> ", " >4> "), body = NULL, elFun = function(node)
-  XML::xmlValue(node), colClasses = NULL, as.data.frame = TRUE, ...)
+htmltable(doc, which = NULL, header = NULL, headerSep = " >> ",
+  body = NULL, elFun = function(node) XML::xmlValue(node),
+  colClasses = NULL, as.data.frame = TRUE, ...)
 }
 \arguments{
 \item{doc}{the HTML document which can be a file name or a URL or an already parsed HTMLInternalDocument, or an HTML node of class XMLInternalElementNode, or a character vector containing the HTML content to parse and process.}

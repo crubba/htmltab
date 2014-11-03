@@ -10,6 +10,7 @@
 #' @param colClasses a vector of classes for the columns.
 #' @param ... additional arguments
 #' @return A list of R data frames (if as.data.frame is left at its default value).
+#' @export
 #' @examples
 #'
 #' This table lacks header information

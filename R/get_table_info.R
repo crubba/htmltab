@@ -16,7 +16,7 @@ get_rowspans <- function(cells, tag = "td | th"){
   rowspans <- lapply(cells, function(tr) {
     XML::xpathSApply(tr, tag, function(node) {
       rs <- XML::xmlGetAttr(node, "rowspan")
-      value <- ifelse(is.null(rs), 1, rs) %>% as.numeric
+      value <- as.numeric(ifelse(is.null(rs), 1, rs))
       return(value)
     }
     )
@@ -32,7 +32,7 @@ get_colspans <- function(cells, tag = "td | th"){
   colspans <- lapply(cells, function(tr) {
     XML::xpathSApply(tr, tag, function(node) {
       cs <- XML::xmlGetAttr(node, "colspan")
-      value <- ifelse(is.null(cs), 1, cs) %>% as.numeric
+      value <- as.numeric(ifelse(is.null(cs), 1, rs))
       return(value)
     }
     )

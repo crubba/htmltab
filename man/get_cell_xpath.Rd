@@ -3,21 +3,17 @@
 \alias{get_cell_xpath}
 \title{Construct an XPath expression for the body cells}
 \usage{
-get_cell_xpath(Node, body)
+get_cell_xpath(table.Node, body)
 }
 \arguments{
-\item{Node}{the HTML document which can be a file name or a URL or an already parsed HTMLInternalDocument, or an HTML node of class XMLInternalElementNode, or a character vector containing the HTML content to parse and process}
+\item{body}{}
 
-\item{body}{a cha}
+\item{Node}{the HTML document which can be a file name or a URL or an already parsed HTMLInternalDocument, or an HTML node of class XMLInternalElementNode, or a character vector containing the HTML content to parse and process}
 }
 \value{
-logical
+a character vector wth XPath statement
 }
 \description{
 Construct an XPath expression for the body cells
-}
-\examples{
-add(1, 1)
-add(10, 1)
 }
 

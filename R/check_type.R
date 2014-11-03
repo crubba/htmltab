@@ -8,7 +8,7 @@
 check_type <- function(doc, which){
 
   #XML input
-  if("HTMLInternalDocument" %in% class(doc)) {
+  if(any(class(doc) == "HTMLInternalDocument")) {
     Node <- XML::getNodeSet(doc, "//table") #returns all tables
     }
 
@@ -23,12 +23,13 @@ check_type <- function(doc, which){
     parsed_doc <- XML::htmlParse(doc)
 
     if (is.character(which)) {
-      xpath <- which %>% paste(., collapse = " | ")
+      xpath <- paste(which, collapse = " | ")
       Node <- XML::getNodeSet(parsed_doc, path = xpath) #needs to work for vector which input
     }
 
     if (is.numeric(which)) {
-      xpath <-  sprintf("//table[%i]", num) %>% paste(., collapse = " | ")
+      xpath <-  sprintf("//table[%i]", num)
+      xpath <- paste(xpath, collapse = " | ")
       Node <- XML::getNodeSet(parsed_doc, path = xpath) #needs to work for vector which input
     }
 

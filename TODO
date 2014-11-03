@@ -1,0 +1,7 @@
+#TODO
+# replace sapply with vapply
+#replace lapply (over indexes) with Map
+# correct elFun in NZ table
+#correct span_header. also see NZ table
+#replace %in% with any()
+#remove list from table.node
