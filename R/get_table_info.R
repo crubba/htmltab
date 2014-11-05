@@ -32,7 +32,7 @@ get_colspans <- function(cells, tag = "td | th"){
   colspans <- lapply(cells, function(tr) {
     XML::xpathSApply(tr, tag, function(node) {
       cs <- XML::xmlGetAttr(node, "colspan")
-      value <- as.numeric(ifelse(is.null(cs), 1, rs))
+      value <- as.numeric(ifelse(is.null(cs), 1, cs))
       return(value)
     }
     )
