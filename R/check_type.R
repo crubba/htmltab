@@ -28,7 +28,7 @@ check_type <- function(doc, which){
     }
 
     if (is.numeric(which)) {
-      xpath <-  sprintf("//table[%i]", num)
+      xpath <-  sprintf("//table[%i]", which)
       xpath <- paste(xpath, collapse = " | ")
       Node <- XML::getNodeSet(parsed_doc, path = xpath) #needs to work for vector which input
     }
