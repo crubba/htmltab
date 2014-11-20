@@ -20,7 +20,7 @@ check_type <- function(doc, which){
   #URL input
   if(is.character(doc)) {
 #    if(!grepl("^www|^http", doc)) stop("Invalid 'doc' input: String is no URL") #doesnt work for files saved on hard drive
-    parsed_doc <- XML::htmlParse(doc)
+    parsed_doc <- XML::htmlParse(doc, ...)
 
     if (is.character(which)) {
       xpath <- paste(which, collapse = " | ")

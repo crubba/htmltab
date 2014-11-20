@@ -9,7 +9,7 @@ span_header <- function(header.names, header.colspans, header.rowspans, headerSe
 
   repeat{#tests if misspecified table rows
 
-    if(length(header.names) > 1 && length(header.names[[2]][1]) == 0){break} #test for misspecified tables
+    if(length(header.names) > 1 && length(header.names[[2]]) == 0){break} #test for misspecified tables
 
     if(header.rowspans[[1]][1] == n.row){ #Does the cell span entire column?
 
@@ -56,7 +56,7 @@ span_header <- function(header.names, header.colspans, header.rowspans, headerSe
       header.name.table <- append(header.name.table, name, length(header.name.table))
     }
 
-    if(length(header.names[[1]]) == 0) {break}
+    if(length(header.names[[1]]) == 0) {break} #
 
   }
   return(header.name.table)
