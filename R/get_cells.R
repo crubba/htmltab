@@ -38,7 +38,7 @@ get_cell_xpath <- function(table.Node, body){
     cell.xpath <- paste(cell.xpath, collapse= " | ")
   }
   if (is.numeric(body) && td){
-    cell.xpath <- lapply(body, function(x) sprintf("tr[td][position() = %s]", x))
+    cell.xpath <- lapply(body, function(x) sprintf("tr[position() = %s]", x)) #used to be "tr[td][position() = %s]"
     cell.xpath <- paste(cell.xpath, collapse= " | ") # does it work for 1:4, -1?
   }
   if (is.null(body) && tbody && td) {

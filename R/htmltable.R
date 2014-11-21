@@ -30,6 +30,8 @@ htmltable <- function(doc,
                       colClasses = NULL,
                       as.data.frame = TRUE, ...){
 
+  args <- list(...)
+
   # Check Inputs ---------------------------
   Node <- check_type(doc, which)
 
@@ -40,7 +42,7 @@ htmltable <- function(doc,
 
   # Create Header ---------------------------
 
-  #Retrieve Head Elements
+    #Retrieve Head Elements
   head <- get_head(table.Node = table.Node, header = header)
 
   # Header Position
