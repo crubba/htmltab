@@ -26,7 +26,7 @@ htmltable <- function(doc,
                       header = NULL,
                       headerSep = " >> ",
                       body = NULL,
-                      elFun = function(node)XML::xmlValue(node),
+                      elFun = function(node, index = "all")XML::xmlValue(node),
                       colClasses = NULL,
                       as.data.frame = TRUE, ...){
 
@@ -69,7 +69,7 @@ htmltable <- function(doc,
   body.colspans <- get_colspans(cells)
 
   #Produce table body
-  tab <- span_body(vals, colspans = body.colspans, rowspans = body.rowspans) #used to be "span.table"
+  tab <- span_body(vals, colspans = body.colspans, rowspans = body.rowspans)
 
 
   # Finish ---------------------------
