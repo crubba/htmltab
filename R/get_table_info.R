@@ -1,16 +1,31 @@
-#Extracts the cell XML value (default)
-get_cell_element <- function(cells, tag = "td | th", elFun = elFun) { #"td for cell values, th for header values
+#' Extracts cells elements
+#'
+#' @param cells a list of cell nodes
+#' @param tag a character vector that provides information used in the XPath expression to extract the correct elements
+#' @param elFun elFun argument
+#' @param rm_escape rm_escape argument
+#' @return A list of table nodes
+
+get_cell_element <- function(cells, tag = "td | th", elFun = bodyFun, rm_escape = NULL) { #"td for cell values, th for header values
 
   cell.element <- lapply(cells, function(tr) {
     XML::xpathSApply(tr, tag, elFun)
   }
   )
 
+  if(!is.null(rm_escape)) {
+    cell.element <- lapply(cell.element, function(el) gsub("[\b \n \t \r]", rm_escape, el))
+  }
+
   return(cell.element)
 }
 
 
-#Extracts rowspan information
+#' Extracts row elements
+#'
+#' @param cells a list of cell nodes
+#' @param tag a character vector that provides information used in the XPath expression to extract the correct elements
+#' @return A list of row information from the cells
 get_rowspans <- function(cells, tag = "td | th"){
 
   rowspans <- lapply(cells, function(tr) {
@@ -26,17 +41,46 @@ get_rowspans <- function(cells, tag = "td | th"){
 }
 
 
-#Extracts colspan information
+#' Extracts colspan elements
+#'
+#' @param cells a list of cell nodes
+#' @param tag a character vector that provides information used in the XPath expression to extract the correct elements
+#' @return A list of column information from the cells
 get_colspans <- function(cells, tag = "td | th"){
 
   colspans <- lapply(cells, function(tr) {
     XML::xpathSApply(tr, tag, function(node) {
       cs <- XML::xmlGetAttr(node, "colspan")
       value <- as.numeric(ifelse(is.null(cs), 1, cs))
+#      if(any(is.na(value))){
+#        warning("A colspan value is no integer. Using 1.")
+#        value[is.na(value)] <- 1
+#      }
       return(value)
     }
     )
   }
   )
   return(colspans)
+}
+
+#' Extracts header elements
+#'
+#' @param cells a list of cell nodes
+#' @param tag a character vector that provides information used in the XPath expression to extract the correct elements
+#' @return A list of header information from the cells
+get_header_elements <- function(cells, tag = "td | th"){
+
+  header_elements <- lapply(cells, function(tr) {
+    XML::xpathSApply(tr, tag, function(node) {
+      if(XML::xmlName(node) != "sup") {
+      value <- XML::xmlValue(node)
+      }
+      #value <- as.numeric(ifelse(is.null(value), 1, value))
+      return(value)
+    }
+    )
+  }
+  )
+  return(header_elements)
 }

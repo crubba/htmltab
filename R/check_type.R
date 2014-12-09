@@ -1,10 +1,3 @@
-
-#' Assemble Check input values
-#'
-#' @param doc the HTML document which can be a file name or a URL or an already parsed HTMLInternalDocument, or an HTML node of class XMLInternalElementNode, or a character vector containing the HTML content to parse and process.
-#' @param which a vector identifying which tables to return from within the document (when such was specified). Either a numeric vector for the tables' rank or a character vector specifiying an XPath for the tables.
-#' @return A list of table nodes.
-
 check_type <- function(doc, which, ...){
 
   #XML input
@@ -21,6 +14,11 @@ check_type <- function(doc, which, ...){
   if(is.character(doc)) {
     #if(!("encoding" %in% names(args))) encoding <- read_charset(doc)
     parsed_doc <- XML::htmlParse(doc, ...)
+
+    if(is.null(which)){
+      warning("Argument 'which' left unspecified. Choosing first table.")
+      which <- 1
+    }
 
     if (is.character(which)) {
       xpath <- paste(which, collapse = " | ")
