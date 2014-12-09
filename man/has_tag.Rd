@@ -6,18 +6,14 @@
 has_tag(table.Node, tag)
 }
 \arguments{
-\item{tag}{a character string for the tag name to be matched}
+\item{table.Node}{the table node}
 
-\item{Node}{the HTML document which can be a file name or a URL or an already parsed HTMLInternalDocument, or an HTML node of class XMLInternalElementNode, or a character vector containing the HTML content to parse and process}
+\item{tag}{a character string for the tag name to be matched}
 }
 \value{
-logical
+logical value showing whether there is such a tag
 }
 \description{
 Assert a specific tag in an XML node
-}
-\examples{
-add(1, 1)
-add(10, 1)
 }
 

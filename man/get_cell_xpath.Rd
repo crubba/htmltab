@@ -6,9 +6,9 @@
 get_cell_xpath(table.Node, body)
 }
 \arguments{
-\item{body}{}
+\item{table.Node}{the table node}
 
-\item{Node}{the HTML document which can be a file name or a URL or an already parsed HTMLInternalDocument, or an HTML node of class XMLInternalElementNode, or a character vector containing the HTML content to parse and process}
+\item{body}{body identifying information}
 }
 \value{
 a character vector wth XPath statement
