@@ -1,17 +1,21 @@
 Package: htmltable
-Title: Assemble HTML tables
-Version: 0.2
+Title: Assemble data frames from HTML tables
+Version: 0.3
 Authors@R: "Christian Rubba <christian.rubba@gmail.com> [aut, cre]"
-Description: htmltable is a package for parsing and assembling HTML tables in
-    R. It is similiar to XML's readHTMLTable() but provides additionally that
-    two major advantages: Automatic adjustment for row- and columnspans. 2.
-    finer control over the conversion step from HTML cell content into the R
-    table.
+Description: htmltable is a package for extracting structured information
+    from HTML tables. It is similiar to XML's readHTMLTable() but provides two major
+    advantages. First, the package automatically expands row- and
+    columnspans in the header and body cells. Users are also given more control
+    over the specification of header and body rows. Second, the package gives
+    users more control over which and how information from the HTML table end up
+    in the R table. It sets sensible default value to alleviate the problem
+    of tedious post-processing.
 Depends:
     R (>= 3.1.0)
 Imports:
-    XML
+    XML (>= 3.98.1.1)
 License: MIT
 LazyData: true
 Suggests:
     testthat
+URL: http://github.com/crubba/htmltable
