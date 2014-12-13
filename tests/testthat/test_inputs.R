@@ -10,7 +10,7 @@ test_that("check_type produces list ouput", {
 
   expect_true(is.list(check_type(doc = "http://en.wikipedia.org/wiki/Indian_general_election,_2014", which = NULL)))
 
-  parsed <- htmlParse("http://en.wikipedia.org/wiki/Indian_general_election,_2014")
+  parsed <- XML::htmlParse("http://en.wikipedia.org/wiki/Indian_general_election,_2014")
   expect_true(is.list(check_type(doc = parsed, which = 3)))
 
 })
