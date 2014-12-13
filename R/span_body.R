@@ -1,6 +1,14 @@
 #Main assembly function
 span_body <- function(vals, colspans, rowspans) {
 
+  #Remove rows which have all empty cells
+  empty.rows <- which(sapply(vals, function(x) all(x == "")))
+  if(!is.empty(empty.rows)){
+    vals <- vals[-empty.rows]
+    colspans <- colspans[-empty.rows]
+    rowspans <- rowspans[-empty.rows]
+  }
+
   n.cols <- sum(as.numeric(unlist(colspans[[1]]))) #get idea from first row column length, should be right usually
   n.rows <- length(rowspans) #guess, better make flexible #lapply(rowspans, function(x) x[1]) %>% unlist %>% as.numeric %>% sum
 
@@ -8,15 +16,22 @@ span_body <- function(vals, colspans, rowspans) {
   mat <- matrix(NA, ncol = n.cols, nrow = n.rows)
   col = 1
 
-  while(col <= n.cols){
+  while(col <= n.cols){ # col start
 
     row <- 1
 
-    while(row <= n.rows){
+    while(row <= n.rows){ # row start
 
       col.span.length <- colspans[[row]][col]
       row.span.length <- rowspans[[row]][col]
       cel.val <- vals[[row]][col]
+
+      #This block controls for undefined col- and rowspans (hacky)
+      if(is.na(row.span.length) && row < n.rows){
+        col.span.length <- 1
+        row.span.length <- 1
+        cel.val <- mat[row, col -1]
+      }
 
       if(row.span.length < 2) {
         mat[row, col] <- cel.val
@@ -44,10 +59,10 @@ span_body <- function(vals, colspans, rowspans) {
       } else{}
 
       row <- row + 1 #row <- row + row.span.length
-    }
+    } #row end
 
     col <- col + 1
-  }
+  } #col end
 
   return(mat)
 

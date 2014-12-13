@@ -36,16 +36,14 @@ get_cell_xpath <- function(table.Node, body){
   tbody <- has_tag(table.Node, "tbody") #does table node has tbody?, list
   td <- has_tag(table.Node, "td") #does table node has <td> tags?, list
 
-  if (is.numeric(body) && tbody){ #check to have header checked (cell.xpath <- sprintf("tr[position() > %s]", max(header)))
-    cell.xpath <- lapply(body, function(x) sprintf("tbody/tr[position() = %s]", x))
-    cell.xpath <- paste(cell.xpath, collapse= " | ")
+  if(is.numeric(body)) {
+    body <- body - 1
+    cell.xpath <- sapply(1:length(body), function(pos) sprintf("count(preceding::tr) = %s", body[pos]))
+    cell.xpath <- paste(cell.xpath, collapse = " or ")
+    cell.xpath <- sprintf("//tr[%s]", cell.xpath)
     return(cell.xpath)
   }
-  if (is.numeric(body) && td){
-    cell.xpath <- lapply(body, function(x) sprintf("tr[position() = %s]", x)) #used to be "tr[td][position() = %s]"
-    cell.xpath <- paste(cell.xpath, collapse= " | ") # does it work for 1:4, -1?
-    return(cell.xpath)
-  }
+
   if (is.null(body) && tbody && td) {
     cell.xpath <- "tbody/tr"
   }
@@ -63,6 +61,13 @@ get_cell_xpath <- function(table.Node, body){
 #  } else {
 #    cell.xpath <- "tr[td]"
 #  }
+
+
+# if (is.numeric(body) && tbody){ #check to have header checked (cell.xpath <- sprintf("tr[position() > %s]", max(header)))
+#   cell.xpath <- lapply(body, function(x) sprintf("tbody/tr[position() = %s]", x))
+#   cell.xpath <- paste(cell.xpath, collapse= " | ")
+#   return(cell.xpath)
+# }
 
   return(cell.xpath)
 }
