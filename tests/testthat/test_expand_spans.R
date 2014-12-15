@@ -167,3 +167,42 @@ test_that("Correctly expanded when misspecified header", {
   expect_that(colnames(tab5)[3], equals("b >> b2"))
   expect_that(colnames(tab5)[4], equals("c"))
 })
+
+
+tab6_code <- '<table>
+<tr>
+<th rowspan="2">a</th>
+<th colspan="2">b</th>
+<th rowspan="40">c</th>
+</tr>
+<tr>
+<td>b1</td>
+<td>b2</td>
+</tr>
+
+<tbody>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+</tbody>
+
+</table>'
+
+test_that("Correctly expanded when misspecified header", {
+
+  tab6 <- XML::htmlParse(tab6_code)
+  tab6 <- htmltable(tab6, header = 1:2)
+
+  expect_that(tab6[,1], equals("1"))
+  expect_that(tab6[,2], equals("2"))
+  expect_that(tab6[,3], equals("3"))
+  expect_that(tab6[,4], equals("4"))
+
+  expect_that(colnames(tab6)[1], equals("a"))
+  expect_that(colnames(tab6)[2], equals("b >> b1"))
+  expect_that(colnames(tab6)[3], equals("b >> b2"))
+  expect_that(colnames(tab6)[4], equals("c"))
+})

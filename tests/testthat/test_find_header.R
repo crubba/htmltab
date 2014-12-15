@@ -108,70 +108,118 @@ test_that("Correctly identified header 3", {
   expect_that(colnames(tab3)[4], equals("d >> e"))
 })
 
-# tab4_code <- '<table>
-# <tr>
-# <th rowspan="2">a</th>
-# <th colspan="2">b</th>
-# <th rowspan="2">c</th>
-# </tr>
-# <tr>
-# <td>b1</td>
-# <td>b2</td>
-# </tr>
-# <tr>
-# <td>1</td>
-# <td>2</td>
-# <td>3</td>
-# <td>4</td>
-# </tr>
-# </table>'
-#
-# test_that("Correctly expanded", {
-#
-#   tab4 <- XML::htmlParse(tab4_code)
-#   tab4 <- htmltable(tab4, header = 1:2, body = 3)
-#
-#   expect_that(tab4[,1], equals("1"))
-#   expect_that(tab4[,2], equals("2"))
-#   expect_that(tab4[,3], equals("3"))
-#   expect_that(tab4[,4], equals("4"))
-#
-#   expect_that(colnames(tab4)[1], equals("a"))
-#   expect_that(colnames(tab4)[2], equals("b >> b1"))
-#   expect_that(colnames(tab4)[3], equals("b >> b2"))
-#   expect_that(colnames(tab4)[4], equals("c"))
-# })
-#
-# tab5_code <- '<table>
-# <tr>
-# <th rowspan="2">a</th>
-# <th colspan="2">b</th>
-# <th rowspan="40">c</th>
-# </tr>
-# <tr>
-# <td>b1</td>
-# <td>b2</td>
-# </tr>
-# <tr>
-# <td>1</td>
-# <td>2</td>
-# <td>3</td>
-# <td>4</td>
-# </tr>
-# </table>'
-#
-# test_that("Correctly expanded when misspecified header", {
-#
-#   tab5 <- XML::htmlParse(tab5_code)
-#   tab5 <- htmltable(tab5, header = 1:2, body = 3)
-#
-#   expect_that(tab5[,1], equals("1"))
-#   expect_that(tab5[,2], equals("2"))
-#   expect_that(tab5[,3], equals("3"))
-#   expect_that(tab5[,4], equals("4"))
-#
-#   expect_that(colnames(tab5)[1], equals("a"))
-#   expect_that(colnames(tab5)[2], equals("b >> b1"))
-#   expect_that(colnames(tab5)[3], equals("b >> b2"))
-#   expect_that(colnames(tab5)[4], equals("c"))
-# })
+
+tab4_code <- '
+<table>
+<tr>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+</tr>
+<tr>
+<th>a2</th>
+<th>b2</th>
+<th>c2</th>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+</table>'
+
+test_that("Correctly identified header 4", {
+
+  tab4 <- XML::htmlParse(tab4_code)
+  tab4 <- htmltable(tab4)
+
+  expect_that(tab4[,1], equals("1"))
+  expect_that(tab4[,2], equals("2"))
+  expect_that(tab4[,3], equals("3"))
+
+  expect_that(colnames(tab4)[1], equals("a >> a2"))
+  expect_that(colnames(tab4)[2], equals("b >> b2"))
+  expect_that(colnames(tab4)[3], equals("c >> c2"))
+})
+
+
+test_that("Correctly identified header 5", {
+
+  tab5 <- XML::htmlParse(tab4_code)
+  tab5 <- htmltable(tab5, header = 1:2)
+
+  expect_that(tab5[,1], equals("1"))
+  expect_that(tab5[,2], equals("2"))
+  expect_that(tab5[,3], equals("3"))
+
+  expect_that(colnames(tab5)[1], equals("a >> a2"))
+  expect_that(colnames(tab5)[2], equals("b >> b2"))
+  expect_that(colnames(tab5)[3], equals("c >> c2"))
+})
+
+test_that("Correctly identified header 6", {
+
+  tab6 <- XML::htmlParse(tab4_code)
+  tab6 <- htmltable(tab6, body = 3)
+
+  expect_that(tab6[,1], equals("1"))
+  expect_that(tab6[,2], equals("2"))
+  expect_that(tab6[,3], equals("3"))
+
+  expect_that(colnames(tab6)[1], equals("a >> a2"))
+  expect_that(colnames(tab6)[2], equals("b >> b2"))
+  expect_that(colnames(tab6)[3], equals("c >> c2"))
+})
+
+
+tab5_code <- '
+<table>
+<thead>
+<tr>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<th>a2</th>
+<th>b2</th>
+<th>c2</th>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>'
+
+test_that("Correctly identified header 7", {
+
+  tab7 <- XML::htmlParse(tab5_code)
+  tab7 <- htmltable(tab7, header = 1:2)
+
+  expect_that(tab7[,1], equals("1"))
+  expect_that(tab7[,2], equals("2"))
+  expect_that(tab7[,3], equals("3"))
+
+  expect_that(colnames(tab7)[1], equals("a >> a2"))
+  expect_that(colnames(tab7)[2], equals("b >> b2"))
+  expect_that(colnames(tab7)[3], equals("c >> c2"))
+})
+
+test_that("Correctly identified header 8", {
+
+  tab8 <- XML::htmlParse(tab5_code)
+  tab8 <- htmltable(tab8, header = 1:2, body = 3)
+
+  expect_that(tab8[,1], equals("1"))
+  expect_that(tab8[,2], equals("2"))
+  expect_that(tab8[,3], equals("3"))
+
+  expect_that(colnames(tab8)[1], equals("a >> a2"))
+  expect_that(colnames(tab8)[2], equals("b >> b2"))
+  expect_that(colnames(tab8)[3], equals("c >> c2"))
+})
