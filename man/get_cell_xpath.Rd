@@ -3,7 +3,7 @@
 \alias{get_cell_xpath}
 \title{Construct an XPath expression for the body cells}
 \usage{
-get_cell_xpath(table.Node, body)
+get_cell_xpath(table.Node, body, header)
 }
 \arguments{
 \item{table.Node}{the table node}

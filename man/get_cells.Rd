@@ -3,7 +3,7 @@
 \alias{get_cells}
 \title{Extract body cell values}
 \usage{
-get_cells(table.Node, body)
+get_cells(table.Node, body, header)
 }
 \arguments{
 \item{table.Node}{the table node}

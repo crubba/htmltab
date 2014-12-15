@@ -9,7 +9,7 @@ is.empty(a)
 \item{a}{a list}
 }
 \value{
-logical
+TRUE when a is empty (length 0)
 }
 \description{
 Check if list is empty
