@@ -81,7 +81,7 @@ htmltable <- function(doc,
   # Create Body ---------------------------
 
   #Get Body Cell Nodes
-  cells <- get_cells(table.Node = table.Node, body = body)
+  cells <- get_cells(table.Node = table.Node, body = body, header = header)
 
   #Extract and transform body cell elements
   vals <- get_cell_element(cells, rm_escape = rm_escape, elFun = bodyFun)

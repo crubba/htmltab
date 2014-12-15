@@ -6,12 +6,20 @@
 
 clean_colnames <- function(header.name.table = NULL, colNames = NULL) {
 
-  if(is.null(colNames)) {
+  if(length(header.name.table) == 0 && is.null(colNames)){
+    warning("No header generated. Try passing information to header or colNames.")
+    return(NULL)
+    }
+
+
+  if(length(header.name.table) > 0 && is.null(colNames)) {
     tab.names <- header.name.table
+    return(tab.names)
   }
 
   if(is.character(colNames)) {
     tab.names <- colNames
+    return(tab.names)
   }
 
   if(class(colNames) == "function") {

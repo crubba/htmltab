@@ -16,10 +16,6 @@ get_head <- function(table.Node, header) {
   }
   ))
 
-  if(is.empty(head)){
-    warning("No header generated. Try passing information to the header argument")
-  }
-
   return(head)
 }
 
@@ -40,13 +36,12 @@ get_header_xpath <- function(table.Node, header){
   th <- has_tag(table.Node, "th") #check if has th, list
 
   if(is.numeric(header)) {
-    header <- header - 1
-    header.xpath <- sapply(1:length(header), function(pos) sprintf("count(preceding::tr) = %s", header[pos]))
+    header.count <- header - 1
+    header.xpath <- sapply(1:length(header.count), function(pos) sprintf("count(preceding-sibling::tr) = %s", header.count[pos]))
     header.xpath <- paste(header.xpath, collapse = " or ")
-    header.xpath <- sprintf("//tr[%s]", header.xpath) #sprintf("//tr[%s]", header.xpath) ¶//table//tr[count(preceding::tr) < %s]
+    header.xpath <- sprintf("tr[%s]", header.xpath)
     return(header.xpath)
   }
-
   if(thead && is.null(header)) { #If a thead exists, take these rows (independent if they are td or th)
     header.xpath <- "thead/tr" #[th and not(./td)]
     return(header.xpath)
@@ -57,13 +52,8 @@ get_header_xpath <- function(table.Node, header){
     return(header.xpath)
   }
 
-#   if(thead && is.null(header) && !th) { #check sequence of statements
-#     header.xpath <- "thead/tr"
-#     return(header.xpath)
-#   }
-
   if (!th && !thead && is.null(header)){
-    header.xpath <- "tr[1]" #*/tr[th]
+    header.xpath <- "tr[1]"
     warning("Neither <thead> nor <th> information found. Taking first table row. If incorrect, specifiy header argument")
     return(header.xpath)
   }

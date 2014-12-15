@@ -9,6 +9,7 @@ span_body <- function(vals, colspans, rowspans) {
     rowspans <- rowspans[-empty.rows]
   }
 
+  #span body
   n.cols <- sum(as.numeric(unlist(colspans[[1]]))) #get idea from first row column length, should be right usually
   n.rows <- length(rowspans) #guess, better make flexible #lapply(rowspans, function(x) x[1]) %>% unlist %>% as.numeric %>% sum
 

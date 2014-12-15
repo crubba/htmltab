@@ -4,9 +4,9 @@
 #' @param body body identifying information
 #' @return list of body information
 #' @family get_head
-get_cells <- function(table.Node, body) {
+get_cells <- function(table.Node, body, header) {
 
-  cell.xpath <- get_cell_xpath(table.Node = table.Node, body = body)
+  cell.xpath <- get_cell_xpath(table.Node = table.Node, body = body, header = header)
 
   cells <- unlist(lapply(1:length(cell.xpath), function(xpath) {
     XML::xpathSApply(table.Node, cell.xpath[[xpath]])
@@ -20,32 +20,47 @@ get_cells <- function(table.Node, body) {
 }
 
 
-
 #' Construct an XPath expression for the body cells
 #'
 #' @param table.Node the table node
 #' @param body body identifying information
 #' @return a character vector wth XPath statement
-get_cell_xpath <- function(table.Node, body){
+get_cell_xpath <- function(table.Node, body, header){
 
   if(is.character(body)){
     cell.xpath <- body
     return(cell.xpath)
   }
 
-  tbody <- has_tag(table.Node, "tbody") #does table node has tbody?, list
-  td <- has_tag(table.Node, "td") #does table node has <td> tags?, list
-
   if(is.numeric(body)) {
     body <- body - 1
     cell.xpath <- sapply(1:length(body), function(pos) sprintf("count(preceding::tr) = %s", body[pos]))
     cell.xpath <- paste(cell.xpath, collapse = " or ")
-    cell.xpath <- sprintf("//tr[%s]", cell.xpath)
+
+    if(!is.numeric(header)){
+      cell.xpath <- sprintf("//tr[%s]", cell.xpath)
+    } else {
+      header <- header - 1
+      header.xpath <- sapply(1:length(header), function(pos) sprintf("not(count(preceding::tr) = %s)", header[pos]))
+      header.xpath <- paste(header.xpath, collapse = " and ")
+      cell.xpath <- sprintf("//tr[%s and %s]", cell.xpath, header.xpath)
+    }
+
     return(cell.xpath)
   }
 
+  tbody <- has_tag(table.Node, "tbody") #does table node has tbody?, list
+  td <- has_tag(table.Node, "td") #does table node has <td> tags?, list
+
   if (is.null(body) && tbody && td) {
-    cell.xpath <- "tbody/tr"
+    if(!is.numeric(header)){
+      cell.xpath <- "tbody/tr"
+    } else {
+      header <- header - 1
+      header.xpath <- sapply(1:length(header), function(pos) sprintf("not(count(preceding::tr) = %s)", header[pos]))
+      header.xpath <- paste(header.xpath, collapse = " and ")
+      cell.xpath <- sprintf("tbody/tr[%s]", header.xpath)
+    }
   }
   if (is.null(body) && td && !(tbody)) { # && is.numeric(header)
     cell.xpath <- "tr[td]" #CORRECT?
