@@ -4,16 +4,14 @@
 #' @param body body identifying information
 #' @return list of body information
 #' @family get_head
-get_cells <- function(table.Node, body, header) {
+get_cells <- function(table.Node, body) {
 
-  cell.xpath <- get_cell_xpath(table.Node = table.Node, body = body, header = header)
+  #cell.xpath <- get_cell_xpath(table.Node = table.Node, body = body)
 
-  cells <- unlist(lapply(1:length(cell.xpath), function(xpath) {
-    XML::xpathSApply(table.Node, cell.xpath[[xpath]])
-  }))
+  cells <- XML::xpathSApply(table.Node, path = body)
 
   if(is.empty(cells)){
-    stop("No body generated. Try passing information to the body argument")
+    stop("No body generated. Try passing information to the body argument", call. = FALSE)
   }
 
   return(cells)
@@ -25,64 +23,32 @@ get_cells <- function(table.Node, body, header) {
 #' @param table.Node the table node
 #' @param body body identifying information
 #' @return a character vector wth XPath statement
-get_cell_xpath <- function(table.Node, body, header){
+get_cell_xpath <- function(table.Node, body){
 
   if(is.character(body)){
     cell.xpath <- body
     return(cell.xpath)
   }
 
+# if(length(head) == 2){
+#    header.xpath <- head[2]
+#  }
+
   if(is.numeric(body)) {
-    body <- body - 1
-    cell.xpath <- sapply(1:length(body), function(pos) sprintf("count(preceding::tr) = %s", body[pos]))
-    cell.xpath <- paste(cell.xpath, collapse = " or ")
-
-    if(!is.numeric(header)){
-      cell.xpath <- sprintf("//tr[%s]", cell.xpath)
-    } else {
-      header <- header - 1
-      header.xpath <- sapply(1:length(header), function(pos) sprintf("not(count(preceding::tr) = %s)", header[pos]))
-      header.xpath <- paste(header.xpath, collapse = " and ")
-      cell.xpath <- sprintf("//tr[%s and %s]", cell.xpath, header.xpath)
-    }
-
+    body.index <- body - 1
+    body.xpath <- sapply(1:length(body.index), function(pos) sprintf("count(preceding::tr) = %s", body.index[pos]))
+    body.xpath <- paste(body.xpath, collapse = " or ")
+    cell.xpath <- sprintf("*/tr[%s] | tr[%s]", body.xpath, body.xpath) #control for different hierarchical structure, should include check for tbody
     return(cell.xpath)
   }
 
-  tbody <- has_tag(table.Node, "tbody") #does table node has tbody?, list
-  td <- has_tag(table.Node, "td") #does table node has <td> tags?, list
+  tbody <- has_tag(table.Node, "tbody")
 
-  if (is.null(body) && tbody && td) {
-    if(!is.numeric(header)){
-      cell.xpath <- "tbody/tr"
-    } else {
-      header <- header - 1
-      header.xpath <- sapply(1:length(header), function(pos) sprintf("not(count(preceding::tr) = %s)", header[pos]))
-      header.xpath <- paste(header.xpath, collapse = " and ")
-      cell.xpath <- sprintf("tbody/tr[%s]", header.xpath)
-    }
+  if(tbody){
+    cell.xpath <- "tbody/tr[ancestor::tbody]"
+  } else {
+    cell.xpath <- "tr[./td]"
   }
-  if (is.null(body) && td && !(tbody)) { # && is.numeric(header)
-    cell.xpath <- "tr[td]" #CORRECT?
-  }
-  if(!exists("cell.xpath")){
-    cell.xpath <- "tr[td]"
-  }
-
-#  if(is.null(body) && td && !(tbody) && is.numeric(header)){
-#    header.xpath <- sapply(1:length(header), function(pos) sprintf("not(position() = %s)", header[pos]))
-#    header.xpath <- paste(header.xpath, collapse = " or ")
-#    cell.xpath <- sprintf("tr[td and %s]", header.xpath)
-#  } else {
-#    cell.xpath <- "tr[td]"
-#  }
-
-
-# if (is.numeric(body) && tbody){ #check to have header checked (cell.xpath <- sprintf("tr[position() > %s]", max(header)))
-#   cell.xpath <- lapply(body, function(x) sprintf("tbody/tr[position() = %s]", x))
-#   cell.xpath <- paste(cell.xpath, collapse= " | ")
-#   return(cell.xpath)
-# }
 
   return(cell.xpath)
 }
@@ -96,6 +62,8 @@ get_cell_xpath <- function(table.Node, body, header){
 #' @return logical value showing whether there is such a tag
 
 has_tag <- function(table.Node, tag) {
-  x <- unlist(XML::xpathSApply(table.Node, "//*", XML::xmlName)) #probably wrong
-  any(x == tag) #tag %in% x
+  x <- XML::xpathSApply(table.Node, tag)
+  if(length(x) > 0){TRUE} else{FALSE}
+  #x <- unlist(XML::xpathSApply(table.Node, "//*", XML::xmlName)) #probably wrong
+  #any(x == tag) #tag %in% x
 }

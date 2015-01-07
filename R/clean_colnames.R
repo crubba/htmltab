@@ -7,10 +7,9 @@
 clean_colnames <- function(header.name.table = NULL, colNames = NULL) {
 
   if(length(header.name.table) == 0 && is.null(colNames)){
-    warning("No header generated. Try passing information to header or colNames.")
+    warning("No header generated. Try passing information to header or colNames.", call. = FALSE)
     return(NULL)
     }
-
 
   if(length(header.name.table) > 0 && is.null(colNames)) {
     tab.names <- header.name.table
@@ -27,5 +26,4 @@ clean_colnames <- function(header.name.table = NULL, colNames = NULL) {
   }
 
   return(tab.names)
-
 }

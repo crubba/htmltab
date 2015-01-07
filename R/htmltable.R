@@ -1,15 +1,15 @@
 #' Robust methods for extracting structured information out of HTML tables
 #'
 #' @export
-#' @param doc the HTML document which can be a file name or a URL or an already parsed document (by XML's parsing functions
-#' @param which a vector identifying which tables to return from the document. Either a numeric vector for the tables' rank (no negative indexes allowed) or a character vector specifiying an XPath for the table
-#' @param header a vector specifying header information. A numeric vector can be specified where each element corresponds to the table rows. A character vector may be specified that describes an XPath for the header rows. If left unspecified, htmltable tries to use semantic information from the HTML code
+#' @param doc the HTML document which can be a file name or a URL or an already parsed document (by XML's parsing functions)
+#' @param which a vector of length one for identification of the table in the document. Either a numeric vector for the tables' rank (no negative indexes allowed) or a character vector specifiying an XPath for the table
+#' @param header a vector that contains information for the identification of the header row(s). A numeric vector can be specified where each element corresponds to the table rows. A character vector may be specified that describes an XPath for the header rows. If left unspecified, htmltable tries to use semantic information from the HTML code
 #' @param headerSep a character vector that is used as a seperator in the construction of the table's variable names (default value ' >> ')
 #' @param body a vector that specifies which table rows should be used as body information. A numeric vector can be specified where each element corresponds to a table row (no negative indexes allowed). A character vector may be specified that describes an XPath for the body rows. If left unspecified, htmltable tries to use semantic information from the HTML code
 #' @param bodyFun a function that is executed over the body cell nodes
 #' @param headerFun a function that is executed over the header cell nodes
 #' @param rm_superscript logical, denotes whether superscript information should be removed from header and body cells (default value TRUE)
-#' @param rm_escape a character vector that, if specified,is used to replace escape sequences in header and body cells (default value ' ')
+#' @param rm_escape a character vector that, if specified, is used to replace escape sequences in header and body cells (default value ' ')
 #' @param rm_footnotes logical, denotes whether semantic footer information should be removed (default value TRUE)
 #' @param colNames a character vector of column names, or a function that can be used to replace specific column names (default value NULL)
 #' @param ... additional arguments
@@ -58,17 +58,18 @@ htmltable <- function(doc,
 
   args <- list(...)
 
-  # Check Inputs & Clean Up -----------------
-  Node <- check_type(doc, which, ...)
-
-  table.Node <- Node[[1]]
-
+  # Check Inputs & Clean Up & Add tr --------
+  table.Node <- check_type(doc, which, ...)
   table.Node <- rm_nuisance(table.Node = table.Node, rm_superscript = rm_superscript, rm_footnotes = rm_footnotes)
+  table.Node <- add_tr(table.Node = table.Node, header =  header, body = body) # make sure every row is nested in a tr
+
+  #Produce XPath for header and body
+  xpath <- get_xpath(table.Node, header = header, body = body)
 
   # Create Header ---------------------------
 
   #Retrieve Head Elements
-  head <- get_head(table.Node = table.Node, header = header)
+  head <- get_head(table.Node = table.Node, header = xpath[1])
 
   header.colspans <- get_colspans(head, tag = "td | th")
   header.rowspans <- get_rowspans(head, tag = "td | th")
@@ -81,7 +82,7 @@ htmltable <- function(doc,
   # Create Body ---------------------------
 
   #Get Body Cell Nodes
-  cells <- get_cells(table.Node = table.Node, body = body, header = header)
+  cells <- get_cells(table.Node = table.Node, body = xpath[2]) #, head = head[[2]]
 
   #Extract and transform body cell elements
   vals <- get_cell_element(cells, rm_escape = rm_escape, elFun = bodyFun)

@@ -1,42 +1,40 @@
 check_type <- function(doc, which, ...){
 
+  #Nodeset
+  if(any(class(doc) == "XMLNodeSet")){
+    Node <- xmlDoc(doc[[1]])
+    return(Node)
+  }
+
   #XML input
   if(any(class(doc) == "HTMLInternalDocument")) {
-    Node <- XML::getNodeSet(doc, "//table") #returns all tables
-    }
-
-  #doc is list of parsed table nodes
-  if(is.list(doc)) {
     Node <- doc
-  }
+    }
 
   #URL input
   if(is.character(doc)) {
-    #if(!("encoding" %in% names(args))) encoding <- read_charset(doc)
-    parsed_doc <- XML::htmlParse(doc, ...)
-
-    if(is.null(which)){
-      warning("Argument 'which' left unspecified. Choosing first table.")
-      which <- 1
-    }
-
-    if (is.character(which)) {
-      xpath <- paste(which, collapse = " | ")
-      Node <- XML::getNodeSet(parsed_doc, path = xpath) #needs to work for vector which input
-    }
-
-    if (is.numeric(which)) {
-      xpath <-  sprintf("//table[%i]", which)
-      xpath <- paste(xpath, collapse = " | ")
-      Node <- XML::getNodeSet(parsed_doc, path = xpath) #needs to work for vector which input
-    }
-
-    if (!is.numeric(which) & !is.character(which)) {
-      Node <- XML::getNodeSet(parsed_doc, path = "//table")
-    }
+    Node <- XML::htmlParse(doc, ...)
   }
 
-  if(!exists("Node")) stop("doc is of unknown type")
+  if(is.null(which)){
+    warning("Argument 'which' left unspecified. Choosing first table.", call. = FALSE)
+    Node <- XML::getNodeSet(Node, path = "//table")[[1]]
+    Node <- XML::xmlDoc(Node)
+    return(Node)
+  }
 
-  return(Node)
+  if (is.numeric(which)) {
+    Node <- XML::getNodeSet(Node, path = "//table")[[which]] #needs to work for vector which input
+    Node <- XML::xmlDoc(Node)
+    return(Node)
+  }
+
+  if (is.character(which)) {
+    xpath <- paste(which, collapse = " | ")
+    Node <- XML::getNodeSet(Node, path = xpath) #needs to work for vector which input
+    Node <- XML::xmlDoc(Node[[1]])
+    return(Node)
+  }
+
+  if(!exists("Node")) stop("doc is of unknown type", call. = FALSE)
 }

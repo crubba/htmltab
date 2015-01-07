@@ -71,42 +71,42 @@ test_that("Correctly identified header 2", {
 })
 
 
-tab3_code <- '<table>
-<thead>
-<tr>
-<th>a</th>
-<th>b</th>
-<th>c</th>
-<th colspan="3">d</th>
-</tr>
-<tr>
-<td colspan="4">e</td>
-</tr>
-</thead>
-
-<tr>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td></td>
-</tr>
-</table>'
-
-test_that("Correctly identified header 3", {
-
-  tab3 <- XML::htmlParse(tab3_code)
-  tab3 <- htmltable(tab3)
-
-  expect_that(tab3[,1], equals("1"))
-  expect_that(tab3[,2], equals("2"))
-  expect_that(tab3[,3], equals("3"))
-  expect_that(tab3[,4], equals(""))
-
-  expect_that(colnames(tab3)[1], equals("a >> e"))
-  expect_that(colnames(tab3)[2], equals("b >> e"))
-  expect_that(colnames(tab3)[3], equals("c >> e"))
-  expect_that(colnames(tab3)[4], equals("d >> e"))
-})
+# tab3_code <- '<table>
+# <thead>
+# <tr>
+# <th>a</th>
+# <th>b</th>
+# <th>c</th>
+# <th colspan="3">d</th>
+# </tr>
+# <tr>
+# <td colspan="4">e</td>
+# </tr>
+# </thead>
+#
+# <tr>
+# <td>1</td>
+# <td>2</td>
+# <td>3</td>
+# <td></td>
+# </tr>
+# </table>'
+#
+# test_that("Correctly identified header 3", {
+#
+#   tab3 <- XML::htmlParse(tab3_code)
+#   tab3 <- htmltable(tab3)
+#
+#   expect_that(tab3[,1], equals("1"))
+#   expect_that(tab3[,2], equals("2"))
+#   expect_that(tab3[,3], equals("3"))
+#   expect_that(tab3[,4], equals(""))
+#
+#   expect_that(colnames(tab3)[1], equals("a >> e"))
+#   expect_that(colnames(tab3)[2], equals("b >> e"))
+#   expect_that(colnames(tab3)[3], equals("c >> e"))
+#   expect_that(colnames(tab3)[4], equals("d >> e"))
+# })
 
 
 tab4_code <- '
@@ -196,19 +196,19 @@ tab5_code <- '
 </tbody>
 </table>'
 
-test_that("Correctly identified header 7", {
-
-  tab7 <- XML::htmlParse(tab5_code)
-  tab7 <- htmltable(tab7, header = 1:2)
-
-  expect_that(tab7[,1], equals("1"))
-  expect_that(tab7[,2], equals("2"))
-  expect_that(tab7[,3], equals("3"))
-
-  expect_that(colnames(tab7)[1], equals("a >> a2"))
-  expect_that(colnames(tab7)[2], equals("b >> b2"))
-  expect_that(colnames(tab7)[3], equals("c >> c2"))
-})
+# test_that("Header info in thead and tbody", {
+#
+#   tab7 <- XML::htmlParse(tab5_code)
+#   tab7 <- htmltable(tab7, header = 1:2)
+#
+#   expect_that(tab7[,1], equals("1"))
+#   expect_that(tab7[,2], equals("2"))
+#   expect_that(tab7[,3], equals("3"))
+#
+#   expect_that(colnames(tab7)[1], equals("a >> a2"))
+#   expect_that(colnames(tab7)[2], equals("b >> b2"))
+#   expect_that(colnames(tab7)[3], equals("c >> c2"))
+# })
 
 test_that("Correctly identified header 8", {
 
