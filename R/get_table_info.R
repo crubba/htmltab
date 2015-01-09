@@ -14,6 +14,7 @@ get_cell_element <- function(cells, tag = "td | th", elFun = bodyFun, rm_escape 
   )
 
   if(!is.null(rm_escape)) {
+    cell.element <- lapply(cell.element, function(el) gsub("([[:alpha:]])-[\b\n\t\r]([[:alpha:]])", "\\1\\2", el))
     cell.element <- lapply(cell.element, function(el) gsub("[\b \n \t \r]", rm_escape, el))
   }
 

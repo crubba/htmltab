@@ -28,17 +28,18 @@
 #'popFun <- function(node) xmlValue(node) %>% str_replace(., ',', '')
 #'htmltable(doc = url, which = xp, bodyFun = popFun)
 #'
-#' #This table lacks header information. We provide them through colNames
+#' #This table lacks header information. We provide them through colNames.
+#' #We also need to set header = 0 to indicate that no header is present.
 #' doc <- "http://en.wikipedia.org/wiki/FC_Bayern_Munich"
 #' xp2 <- "//td[text() = 'Head coach']/ancestor::table"
-#' htmltable(doc = doc, which = xp2, encoding = "UTF-8", colNames = c("name", "role"))
+#' htmltable(doc = doc, which = xp2, header = 0, encoding = "UTF-8", colNames = c("name", "role"))
 #'
 #'
 #' #htmltable recognizes column spans and produces a one-dimension vector of variable information,
 #' #also removes automatically superscript information since these are usually not wanted.
 #'
 #' doc <- "http://en.wikipedia.org/wiki/Usage_share_of_web_browsers"
-#' xp3 <-  "//table[5]"
+#' xp3 <-  "//table[6]"
 #' bFun <- function(node) {xmlValue(node) %>% str_replace(., '%$', '') %>% ifelse(equals(., ''), NA, .)}
 #' htmltable(doc = doc, which = xp3, bodyFun = bFun)
 #'
@@ -64,7 +65,7 @@ htmltable <- function(doc,
   table.Node <- add_tr(table.Node = table.Node, header =  header, body = body) # make sure every row is nested in a tr
 
   #Produce XPath for header and body
-  xpath <- get_xpath(table.Node, header = header, body = body)
+  xpath <- get_xpath(table.Node = table.Node, header = header, body = body)
 
   # Create Header ---------------------------
 
@@ -82,7 +83,7 @@ htmltable <- function(doc,
   # Create Body ---------------------------
 
   #Get Body Cell Nodes
-  cells <- get_cells(table.Node = table.Node, body = xpath[2]) #, head = head[[2]]
+  cells <- get_cells(table.Node = table.Node, body = xpath[2])
 
   #Extract and transform body cell elements
   vals <- get_cell_element(cells, rm_escape = rm_escape, elFun = bodyFun)

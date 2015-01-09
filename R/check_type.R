@@ -2,8 +2,8 @@ check_type <- function(doc, which, ...){
 
   #Nodeset
   if(any(class(doc) == "XMLNodeSet")){
-    Node <- xmlDoc(doc[[1]])
-    return(Node)
+    Node1 <- XML::xmlParse(XML::saveXML(doc[[1]]))
+    return(Node1)
   }
 
   #XML input
@@ -18,22 +18,34 @@ check_type <- function(doc, which, ...){
 
   if(is.null(which)){
     warning("Argument 'which' left unspecified. Choosing first table.", call. = FALSE)
-    Node <- XML::getNodeSet(Node, path = "//table")[[1]]
-    Node <- XML::xmlDoc(Node)
-    return(Node)
+    Node1 <- XML::getNodeSet(Node, path = "//table")[[1]]
+    if(is.null(Node1)){
+      stop("Couldn't identify table. Try passing (a different) information to the which argument.", call. = FALSE)
+    }
+
+    Node1 <- XML::xmlParse(XML::saveXML(Node1))
+    return(Node1)
   }
 
   if (is.numeric(which)) {
-    Node <- XML::getNodeSet(Node, path = "//table")[[which]] #needs to work for vector which input
-    Node <- XML::xmlDoc(Node)
-    return(Node)
+    Node1 <- XML::getNodeSet(Node, path = "//table")
+    if(is.null(Node1[[which]])){
+      stop("Couldn't identify table. Try passing (a different) information to the which argument.", call. = FALSE)
+    }
+
+    Node1 <- XML::xmlParse(XML::saveXML(Node1[[which]]))
+    return(Node1)
   }
 
   if (is.character(which)) {
     xpath <- paste(which, collapse = " | ")
-    Node <- XML::getNodeSet(Node, path = xpath) #needs to work for vector which input
-    Node <- XML::xmlDoc(Node[[1]])
-    return(Node)
+    Node1 <- XML::getNodeSet(Node, path = xpath)
+    if(is.null(Node1[[1]])){
+      stop("Couldn't identify table. Try passing (a different) information to the which argument.", call. = FALSE)
+    }
+
+    Node1 <- XML::xmlParse(XML::saveXML(Node1[[1]]))
+    return(Node1)
   }
 
   if(!exists("Node")) stop("doc is of unknown type", call. = FALSE)

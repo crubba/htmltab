@@ -1,6 +1,6 @@
 Package: htmltable
 Title: Assemble data frames from HTML tables
-Version: 0.4
+Version: 1.0.0
 Authors@R: "Christian Rubba <christian.rubba@gmail.com> [aut, cre]"
 Description: htmltable is a package for extracting structured information from
     HTML tables. It is similiar to XML's readHTMLTable() but provides two major
