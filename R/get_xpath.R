@@ -28,7 +28,7 @@ get_head_xpath <- function(table.Node, header){
   td <- has_tag(table.Node, "//tr[td and not(./th)]")
 
   if(is.character(header)){
-    header.xpath <- c(header, "ancestor::tr")
+    header.xpath <- c(header, "ancestor::table")
     return(header.xpath)
   }
 
@@ -71,7 +71,7 @@ get_body_xpath <- function(table.Node, body){
   td <- has_tag(table.Node, "//tr[td and not(./th)]")
 
   if(is.character(body)){
-    body.xpath <- c(body, "ancestor::tr")
+    body.xpath <- c(body, "ancestor::table")
     return(body.xpath)
   }
 
