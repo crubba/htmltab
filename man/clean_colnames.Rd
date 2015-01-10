@@ -7,12 +7,12 @@
 clean_colnames(header.name.table = NULL, colNames = NULL)
 }
 \arguments{
-\item{header.name.table}{the table node}
+\item{header.name.table}{the header column names vector}
 
 \item{colNames}{either a self-specificed character vector for the column names or a function used on header.name.table}
 }
 \value{
-a character vector
+a character vector of header column names
 }
 \description{
 Produces correct column names

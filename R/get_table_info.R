@@ -2,9 +2,9 @@
 #'
 #' @param cells a list of cell nodes
 #' @param tag a character vector that provides information used in the XPath expression to extract the correct elements
-#' @param elFun elFun argument
-#' @param rm_escape rm_escape argument
-#' @return A list of table nodes
+#' @param elFun a function that is executed over the body cell nodes
+#' @param rm_escape a character vector that, if specified, is used to replace escape sequences in header and body cells (default value ' ')
+#' @return the body element
 
 get_cell_element <- function(cells, tag = "td | th", elFun, rm_escape = NULL) { #"td for cell values, th for header values
 
@@ -22,7 +22,7 @@ get_cell_element <- function(cells, tag = "td | th", elFun, rm_escape = NULL) { 
 }
 
 
-#' Extracts row elements
+#' Extracts rowspan information
 #'
 #' @param cells a list of cell nodes
 #' @param tag a character vector that provides information used in the XPath expression to extract the correct elements
@@ -42,7 +42,7 @@ get_rowspans <- function(cells, tag = "td | th"){
 }
 
 
-#' Extracts colspan elements
+#' Extracts colspan information
 #'
 #' @param cells a list of cell nodes
 #' @param tag a character vector that provides information used in the XPath expression to extract the correct elements

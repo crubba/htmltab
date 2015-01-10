@@ -11,12 +11,12 @@ get_cell_element(cells, tag = "td | th", elFun, rm_escape = NULL)
 
 \item{tag}{a character vector that provides information used in the XPath expression to extract the correct elements}
 
-\item{elFun}{elFun argument}
+\item{elFun}{a function that is executed over the body cell nodes}
 
-\item{rm_escape}{rm_escape argument}
+\item{rm_escape}{a character vector that, if specified, is used to replace escape sequences in header and body cells (default value ' ')}
 }
 \value{
-A list of table nodes
+the body element
 }
 \description{
 Extracts cells elements

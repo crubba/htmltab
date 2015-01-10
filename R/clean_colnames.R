@@ -1,9 +1,8 @@
 #' Produces correct column names
 #'
-#' @param header.name.table the table node
+#' @param header.name.table the header column names vector
 #' @param colNames either a self-specificed character vector for the column names or a function used on header.name.table
-#' @return a character vector
-
+#' @return a character vector of header column names
 clean_colnames <- function(header.name.table = NULL, colNames = NULL) {
 
   if(length(header.name.table) == 0 && is.null(colNames)){

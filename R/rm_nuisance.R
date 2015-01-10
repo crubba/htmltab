@@ -1,11 +1,9 @@
-#' Assemble Check input values
+#' Remove nuisance elements
 #'
 #' @param table.Node the table node
 #' @param rm_superscript logical, denotes whether superscript information should be removed from header and body cells (default value TRUE)
 #' @param rm_footnotes logical, denotes whether semantic footer information should be removed (default value TRUE)
 #' @return A list of table nodes.
-
-
 rm_nuisance <- function(table.Node, rm_superscript = T, rm_footnotes = T){
 
   if(isTRUE(rm_superscript)){
@@ -20,7 +18,10 @@ rm_nuisance <- function(table.Node, rm_superscript = T, rm_footnotes = T){
 }
 
 
-
+#' Remove no data columns
+#'
+#' @param df a data frame
+#' @return a data frame
 rm_empty_cols <- function(df){
 
   empty.cols <- sapply(df, function(col){
@@ -36,8 +37,4 @@ rm_empty_cols <- function(df){
   }
 
   return(df)
-}
-
-replace_NA <- function(df){
-
 }

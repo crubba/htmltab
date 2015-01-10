@@ -2,19 +2,19 @@
 % Please edit documentation in R/get_head.R
 \name{get_head}
 \alias{get_head}
-\title{Assemble Check input values}
+\title{Assemble table head}
 \usage{
 get_head(table.Node, header)
 }
 \arguments{
 \item{table.Node}{the table node}
 
-\item{header}{an information on the header rows}
+\item{header}{a vector that contains information for the identification of the header row(s). A numeric vector can be specified where each element corresponds to the table rows. A character vector may be specified that describes an XPath for the header rows. If left unspecified, htmltable tries to use semantic information from the HTML code}
 }
 \value{
-A list of header information
+the header element
 }
 \description{
-Assemble Check input values
+Assemble table head
 }
 

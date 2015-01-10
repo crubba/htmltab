@@ -2,7 +2,7 @@
 % Please edit documentation in R/rm_nuisance.R
 \name{rm_nuisance}
 \alias{rm_nuisance}
-\title{Assemble Check input values}
+\title{Remove nuisance elements}
 \usage{
 rm_nuisance(table.Node, rm_superscript = T, rm_footnotes = T)
 }
@@ -17,6 +17,6 @@ rm_nuisance(table.Node, rm_superscript = T, rm_footnotes = T)
 A list of table nodes.
 }
 \description{
-Assemble Check input values
+Remove nuisance elements
 }
 

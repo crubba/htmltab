@@ -1,3 +1,10 @@
+#' Creates header using span information
+#'
+#' @param header.names a list of header names
+#' @param header.colspans a list of header colspans
+#' @param header.rowspans a list of header rowspans
+#' @param headerSep a character vector that is used as a seperator in the construction of the table's variable names (default value ' >> ')
+#' @return a vector of header column names
 
 #Create header with spans
 span_header <- function(header.names, header.colspans, header.rowspans, headerSep) {

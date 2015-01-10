@@ -1,4 +1,9 @@
-#Main assembly function
+#' Creates body using span information
+#'
+#' @param vals a list of body cell values
+#' @param colspans a list of body colspans
+#' @param rowspans a list of body rowspans
+#' @return a matrix of the assembled body
 span_body <- function(vals, colspans, rowspans) {
 
   #Remove rows which have all empty cells

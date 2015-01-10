@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_table_info.R
 \name{get_colspans}
 \alias{get_colspans}
-\title{Extracts colspan elements}
+\title{Extracts colspan information}
 \usage{
 get_colspans(cells, tag = "td | th")
 }
@@ -15,6 +15,6 @@ get_colspans(cells, tag = "td | th")
 A list of column information from the cells
 }
 \description{
-Extracts colspan elements
+Extracts colspan information
 }
 

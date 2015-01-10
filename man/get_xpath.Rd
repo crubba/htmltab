@@ -9,9 +9,9 @@ get_xpath(table.Node, header, body)
 \arguments{
 \item{table.Node}{the table node}
 
-\item{header}{an information for the header rows}
+\item{header}{a vector that contains information for the identification of the header row(s). A numeric vector can be specified where each element corresponds to the table rows. A character vector may be specified that describes an XPath for the header rows. If left unspecified, htmltable tries to use semantic information from the HTML code}
 
-\item{body}{an information for the body rows}
+\item{body}{a vector that specifies which table rows should be used as body information. A numeric vector can be specified where each element corresponds to a table row. A character vector may be specified that describes an XPath for the body rows. If left unspecified, htmltable tries to use semantic information from the HTML code}
 }
 \value{
 a character vector of XPath statements

@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_xpath.R
 \name{get_body_xpath}
 \alias{get_body_xpath}
-\title{Return header xpath}
+\title{Return body xpath}
 \usage{
 get_body_xpath(table.Node, body)
 }
@@ -15,6 +15,6 @@ get_body_xpath(table.Node, body)
 a character vector of XPath statements
 }
 \description{
-Return header xpath
+Return body xpath
 }
 

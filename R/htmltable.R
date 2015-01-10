@@ -18,7 +18,7 @@
 #' @return An R data frame
 #' @examples
 #'
-#'# When no spans are presented, htmltable produces output identical to XML's readHTMLTable()
+#'# When no spans are present, htmltable produces output identical to XML's readHTMLTable()
 #'
 #'  url <- "http://en.wikipedia.org/wiki/World_population"
 #'  xp <- "//caption[starts-with(text(),'World historical')]/ancestor::table"
@@ -37,9 +37,8 @@
 #' xp2 <- "//td[text() = 'Head coach']/ancestor::table"
 #' htmltable(doc = doc, which = xp2, header = 0, encoding = "UTF-8", colNames = c("name", "role"))
 #'
-#'
 #' #htmltable recognizes column spans and produces a one-dimension vector of variable information,
-#' #also removes automatically superscript information since these are usually not wanted.
+#' #also removes automatically superscript information since these are usually not of use.
 #'
 #'  doc <- "http://en.wikipedia.org/wiki/Usage_share_of_web_browsers"
 #'  xp3 <-  "//table[6]"
@@ -70,10 +69,11 @@ htmltable <- function(doc,
   # Check Inputs & Clean Up & Add tr --------
   table.Node <- check_type(doc, which, ...)
   table.Node <- rm_nuisance(table.Node = table.Node, rm_superscript = rm_superscript, rm_footnotes = rm_footnotes)
-  table.Node <- add_tr(table.Node = table.Node, header =  header, body = body) # make sure every row is nested in a tr
+  table.Node <- add_tr(table.Node = table.Node, header =  header, body = body)
 
   #Produce XPath for header and body
   xpath <- get_xpath(table.Node = table.Node, header = header, body = body)
+
 
   # Create Header ---------------------------
 
@@ -106,7 +106,7 @@ htmltable <- function(doc,
 
   # Finish ---------------------------
 
-  #Give Column Names
+  #Give column Names
   colnames(tab) <- clean_colnames(header.name.table = header.name.table, colNames = colNames)
 
   #Make df

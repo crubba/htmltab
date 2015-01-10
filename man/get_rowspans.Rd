@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_table_info.R
 \name{get_rowspans}
 \alias{get_rowspans}
-\title{Extracts row elements}
+\title{Extracts rowspan information}
 \usage{
 get_rowspans(cells, tag = "td | th")
 }
@@ -15,6 +15,6 @@ get_rowspans(cells, tag = "td | th")
 A list of row information from the cells
 }
 \description{
-Extracts row elements
+Extracts rowspan information
 }
 
