@@ -6,17 +6,14 @@ o Header and body are now treated as complementary elements of a table, i.e. pas
 o Added a new argument (fillNA) to automatically replace empty cells by NA
 o Added a new argument (rm_nodata_cols) to remove columns that have no apparent data value
 
-
 BUG FIXES
 
 o Fixed a problem where htmltable failed when a table didn't nest a row within tr tags. Now every table is controlled, and tr tags are added when necessary
 o Fixed a small problem with misspecified spans in the table header
 o Added meaningful error message when table couldn't be identified
+o Fixed problem when header warning was thrown even when colNames was supplied
 
 MAJOR CHANGES
 
 o Revised code for header and body identification. When an XPath is passed to either of the two, it must treat the parent table node as the root
 
-MINOR CHANGES
-
-o
