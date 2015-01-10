@@ -55,7 +55,7 @@ get_head_xpath <- function(table.Node, header){
 }
 
 
-#' Return header xpath
+#' Return body xpath
 #'
 #' @param table.Node the table node
 #' @param body an information for the body rows
@@ -71,7 +71,7 @@ get_body_xpath <- function(table.Node, body){
   td <- has_tag(table.Node, "//tr[td and not(./th)]")
 
   if(is.character(body)){
-    body.xpath <- c(body, "acenstor::tr")
+    body.xpath <- c(body, "ancestor::tr")
     return(body.xpath)
   }
 
@@ -93,8 +93,8 @@ get_body_xpath <- function(table.Node, body){
 #' Assemble XPath expressions for header and body
 #'
 #' @param table.Node the table node
-#' @param header an information for the header rows
-#' @param body an information for the body rows
+#' @param header a vector that contains information for the identification of the header row(s). A numeric vector can be specified where each element corresponds to the table rows. A character vector may be specified that describes an XPath for the header rows. If left unspecified, htmltable tries to use semantic information from the HTML code
+#' @param body a vector that specifies which table rows should be used as body information. A numeric vector can be specified where each element corresponds to a table row. A character vector may be specified that describes an XPath for the body rows. If left unspecified, htmltable tries to use semantic information from the HTML code
 #' @return a character vector of XPath statements
 get_xpath <- function(table.Node, header, body){
 
@@ -131,11 +131,11 @@ get_xpath <- function(table.Node, header, body){
     return(xp)
   }
 
-  #produce xpaths
+  #produce individual xpaths
   header.xpath <- get_head_xpath(table.Node = table.Node, header = header)
   body.xpath <- get_body_xpath(table.Node = table.Node, body = body)
 
-  #Complementary header and body
+  #Adjust for complementary of header and body
   header.xpath[1] <- sprintf(header.xpath[1], body.xpath[2])
   body.xpath[1] <- sprintf(body.xpath[1], header.xpath[2])
 
