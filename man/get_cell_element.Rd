@@ -4,8 +4,7 @@
 \alias{get_cell_element}
 \title{Extracts cells elements}
 \usage{
-get_cell_element(cells, tag = "td | th", elFun = bodyFun,
-  rm_escape = NULL)
+get_cell_element(cells, tag = "td | th", elFun, rm_escape = NULL)
 }
 \arguments{
 \item{cells}{a list of cell nodes}

@@ -2,15 +2,17 @@
 #'
 #' @export
 #' @param doc the HTML document which can be a file name or a URL or an already parsed document (by XML's parsing functions)
-#' @param which a vector of length one for identification of the table in the document. Either a numeric vector for the tables' rank (no negative indexes allowed) or a character vector specifiying an XPath for the table
+#' @param which a vector of length one for identification of the table in the document. Either a numeric vector for the tables' rank or a character vector that describes an XPath for the table
 #' @param header a vector that contains information for the identification of the header row(s). A numeric vector can be specified where each element corresponds to the table rows. A character vector may be specified that describes an XPath for the header rows. If left unspecified, htmltable tries to use semantic information from the HTML code
 #' @param headerSep a character vector that is used as a seperator in the construction of the table's variable names (default value ' >> ')
-#' @param body a vector that specifies which table rows should be used as body information. A numeric vector can be specified where each element corresponds to a table row (no negative indexes allowed). A character vector may be specified that describes an XPath for the body rows. If left unspecified, htmltable tries to use semantic information from the HTML code
+#' @param fillNA logical, if TRUE empty cells are filled with NA (default TRUE)
+#' @param body a vector that specifies which table rows should be used as body information. A numeric vector can be specified where each element corresponds to a table row. A character vector may be specified that describes an XPath for the body rows. If left unspecified, htmltable tries to use semantic information from the HTML code
 #' @param bodyFun a function that is executed over the body cell nodes
 #' @param headerFun a function that is executed over the header cell nodes
 #' @param rm_superscript logical, denotes whether superscript information should be removed from header and body cells (default value TRUE)
-#' @param rm_escape a character vector that, if specified, is used to replace escape sequences in header and body cells (default value ' ')
 #' @param rm_footnotes logical, denotes whether semantic footer information should be removed (default value TRUE)
+#' @param rm_nodata_cols logical, denotes whether columns that have no alphanumeric data should be removed
+#' @param rm_escape a character vector that, if specified, is used to replace escape sequences in header and body cells (default value ' ')
 #' @param colNames a character vector of column names, or a function that can be used to replace specific column names (default value NULL)
 #' @param ... additional arguments
 #' @return An R data frame
@@ -18,15 +20,16 @@
 #'
 #'# When no spans are presented, htmltable produces output identical to XML's readHTMLTable()
 #'
-#'url <- "http://en.wikipedia.org/wiki/World_population"
-#'xp <- "//caption[text() = 'World historical and predicted populations (in millions)']/ancestor::table"
-#'htmltable(doc = url, which = xp)
+#'  url <- "http://en.wikipedia.org/wiki/World_population"
+#'  xp <- "//caption[starts-with(text(),'World historical')]/ancestor::table"
+#'  htmltable(doc = url, which = xp)
 #'
-#' library(magrittr)
-#' library(stringr)
-#' library(XML)
-#'popFun <- function(node) xmlValue(node) %>% str_replace(., ',', '')
-#'htmltable(doc = url, which = xp, bodyFun = popFun)
+#'  popFun <- function(node) {
+#'    x <- XML::xmlValue(node)
+#'    gsub(',', '', x)
+#'  }
+#'
+#'  htmltable(doc = url, which = xp, bodyFun = popFun)
 #'
 #' #This table lacks header information. We provide them through colNames.
 #' #We also need to set header = 0 to indicate that no header is present.
@@ -38,26 +41,31 @@
 #' #htmltable recognizes column spans and produces a one-dimension vector of variable information,
 #' #also removes automatically superscript information since these are usually not wanted.
 #'
-#' doc <- "http://en.wikipedia.org/wiki/Usage_share_of_web_browsers"
-#' xp3 <-  "//table[6]"
-#' bFun <- function(node) {xmlValue(node) %>% str_replace(., '%$', '') %>% ifelse(equals(., ''), NA, .)}
-#' htmltable(doc = doc, which = xp3, bodyFun = bFun)
+#'  doc <- "http://en.wikipedia.org/wiki/Usage_share_of_web_browsers"
+#'  xp3 <-  "//table[6]"
+#'  bFun <- function(node) {
+#'    x <- XML::xmlValue(node)
+#'    gsub('%$', '', x)
+#'  }
 #'
+#'  htmltable(doc = doc, which = xp3, bodyFun = bFun)
+#'
+
 
 htmltable <- function(doc,
                       which = NULL,
                       header = NULL,
                       headerSep = " >> ",
+                      fillNA = T,
                       body = NULL,
                       bodyFun = function(node)XML::xmlValue(node),
                       headerFun = function(node)XML::xmlValue(node),
                       rm_superscript = T,
                       rm_escape = " ",
                       rm_footnotes = T,
+                      rm_nodata_cols = T,
                       colNames = NULL,
                       ...){
-
-  args <- list(...)
 
   # Check Inputs & Clean Up & Add tr --------
   table.Node <- check_type(doc, which, ...)
@@ -86,7 +94,7 @@ htmltable <- function(doc,
   cells <- get_cells(table.Node = table.Node, body = xpath[2])
 
   #Extract and transform body cell elements
-  vals <- get_cell_element(cells, rm_escape = rm_escape, elFun = bodyFun)
+  vals <- get_cell_element(cells, elFun = bodyFun, rm_escape = rm_escape)
 
   #Produce rowspans and colspans lists from body cell
   body.rowspans <- get_rowspans(cells)
@@ -103,6 +111,16 @@ htmltable <- function(doc,
 
   #Make df
   tab <- as.data.frame(tab, stringsAsFactors = F)
+
+  #Check if there are no data columns
+  if(isTRUE(rm_nodata_cols)){
+    tab <- rm_empty_cols(df = tab)
+  }
+
+  #Replace empty vals by NA
+  if(isTRUE(fillNA)){
+    tab[tab == ""] <- NA
+  }
 
   return(tab)
 }

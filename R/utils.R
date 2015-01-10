@@ -5,11 +5,11 @@
 
 is.empty <- function(a) {length(a) == 0}
 
-#' Check if all elements in vector have equal length
-#'
-#'
+#' Check if all list vectors  have equal length
+#' @param x list of vectors
+#' @return logical
 
-equal.length <- function(a) {
-  a.length <- sapply(a, length)
-  length(unique(a.length)) == 1
+equal.length <- function(x) {
+  x.length <- sapply(x, length)
+  length(unique(x.length)) == 1
 }

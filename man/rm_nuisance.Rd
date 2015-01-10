@@ -7,9 +7,11 @@
 rm_nuisance(table.Node, rm_superscript = T, rm_footnotes = T)
 }
 \arguments{
-\item{doc}{the HTML document which can be a file name or a URL or an already parsed HTMLInternalDocument, or an HTML node of class XMLInternalElementNode, or a character vector containing the HTML content to parse and process.}
+\item{table.Node}{the table node}
 
-\item{which}{a vector identifying which tables to return from within the document (when such was specified). Either a numeric vector for the tables' rank or a character vector specifiying an XPath for the tables.}
+\item{rm_superscript}{logical, denotes whether superscript information should be removed from header and body cells (default value TRUE)}
+
+\item{rm_footnotes}{logical, denotes whether semantic footer information should be removed (default value TRUE)}
 }
 \value{
 A list of table nodes.

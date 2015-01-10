@@ -18,18 +18,18 @@ check_type <- function(doc, which, ...){
 
   if(is.null(which)){
     warning("Argument 'which' left unspecified. Choosing first table.", call. = FALSE)
-    Node1 <- XML::getNodeSet(Node, path = "//table")[[1]]
-    if(is.null(Node1)){
-      stop("Couldn't identify table. Try passing (a different) information to the which argument.", call. = FALSE)
+    Node1 <- XML::getNodeSet(Node, path = "//table")
+    if(length(Node1) == 0){
+      stop("Couldn't find a table.", call. = FALSE)
     }
 
-    Node1 <- XML::xmlParse(XML::saveXML(Node1))
+    Node1 <- XML::xmlParse(XML::saveXML(Node1[[1]]))
     return(Node1)
   }
 
   if (is.numeric(which)) {
     Node1 <- XML::getNodeSet(Node, path = "//table")
-    if(is.null(Node1[[which]])){
+    if(length(Node1) <= which){
       stop("Couldn't identify table. Try passing (a different) information to the which argument.", call. = FALSE)
     }
 

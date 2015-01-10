@@ -1,3 +1,10 @@
+#' Assert that all table rows are nested in tr tags
+#'
+#' @param table.Node the table node
+#' @param header information passed from the header argument
+#' @param body information passed from the body argument
+#' @return the table node
+
 add_tr <- function(table.Node, header, body){
 
   if(!is.character(header)){

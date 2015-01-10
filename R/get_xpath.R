@@ -16,9 +16,7 @@ num_xpath <- function(index){
 #'
 #' @param table.Node the table node
 #' @param header an information for the header rows
-#' @param body an information for the body rows
 #' @return a character vector of XPath statements
-#'
 get_head_xpath <- function(table.Node, header){
 
   thead <- has_tag(table.Node, "//thead")
@@ -30,7 +28,7 @@ get_head_xpath <- function(table.Node, header){
   td <- has_tag(table.Node, "//tr[td and not(./th)]")
 
   if(is.character(header)){
-    header.xpath <- c(header, "*")
+    header.xpath <- c(header, "ancestor::tr")
     return(header.xpath)
   }
 
@@ -51,13 +49,17 @@ get_head_xpath <- function(table.Node, header){
 
   if (!thead && !th){
     header.xpath <- c("//tr[position() = 1 and %s]", "not(position() = 1)")
-    warning("Neither <thead> nor <th> information found. Taking first table row. If incorrect, specifiy header argument", call. = FALSE)
+    warning("Neither <thead> nor <th> information found. Taking first table row. If incorrect, specifiy header argument.", call. = FALSE)
     return(header.xpath)
   }
 }
 
 
-#BODY
+#' Return header xpath
+#'
+#' @param table.Node the table node
+#' @param body an information for the body rows
+#' @return a character vector of XPath statements
 get_body_xpath <- function(table.Node, body){
 
   tbody <- has_tag(table.Node, "//tbody")
@@ -69,7 +71,7 @@ get_body_xpath <- function(table.Node, body){
   td <- has_tag(table.Node, "//tr[td and not(./th)]")
 
   if(is.character(body)){
-    body.xpath <- c(body, "*")
+    body.xpath <- c(body, "acenstor::tr")
     return(body.xpath)
   }
 

@@ -2,11 +2,17 @@
 % Please edit documentation in R/utils.R
 \name{equal.length}
 \alias{equal.length}
-\title{Check if all elements in vector have equal length}
+\title{Check if all list vectors  have equal length}
 \usage{
-equal.length(a)
+equal.length(x)
+}
+\arguments{
+\item{x}{list of vectors}
+}
+\value{
+logical
 }
 \description{
-Check if all elements in vector have equal length
+Check if all list vectors  have equal length
 }
 

@@ -1,0 +1,22 @@
+CHANGES IN htmltable VERSION 1.0.0
+
+NEW FEATURES
+
+o Header and body are now treated as complementary elements of a table, i.e. passing (numeric) information about the position of either of the two will be used for the identification of the other.
+o Added a new argument (fillNA) to automatically replace empty cells by NA
+o Added a new argument (rm_nodata_cols) to remove columns that have no apparent data value
+
+
+BUG FIXES
+
+o Fixed a problem where htmltable failed when a table didn't nest a row within tr tags. Now every table is controlled, and tr tags are added when necessary
+o Fixed a small problem with misspecified spans in the table header
+o Added meaningful error message when table couldn't be identified
+
+MAJOR CHANGES
+
+o Revised code for header and body identification. When an XPath is passed to either of the two, it must treat the parent table node as the root
+
+MINOR CHANGES
+
+o

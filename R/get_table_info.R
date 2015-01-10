@@ -6,7 +6,7 @@
 #' @param rm_escape rm_escape argument
 #' @return A list of table nodes
 
-get_cell_element <- function(cells, tag = "td | th", elFun = bodyFun, rm_escape = NULL) { #"td for cell values, th for header values
+get_cell_element <- function(cells, tag = "td | th", elFun, rm_escape = NULL) { #"td for cell values, th for header values
 
   cell.element <- lapply(cells, function(tr) {
     XML::xpathSApply(tr, tag, elFun)
