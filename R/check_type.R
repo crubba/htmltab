@@ -12,7 +12,7 @@ check_type <- function(doc, which, ...){
     return(Node1)
   }
 
-  #XML input
+  #parsed HTML
   if(any(class(doc) == "HTMLInternalDocument")) {
     Node <- doc
     }
