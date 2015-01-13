@@ -8,7 +8,7 @@ span_body <- function(vals, colspans, rowspans) {
 
   #Remove rows which have all empty cells
   empty.rows <- which(sapply(vals, function(x) all(x == "")))
-  if(!is.empty(empty.rows)){
+  if(!is_empty(empty.rows)){
     vals <- vals[-empty.rows]
     colspans <- colspans[-empty.rows]
     rowspans <- rowspans[-empty.rows]

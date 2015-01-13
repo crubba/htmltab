@@ -8,7 +8,7 @@ get_cells <- function(table.Node, body) {
 
   cells <- XML::xpathSApply(table.Node, path = body)
 
-  if(is.empty(cells)){
+  if(is_empty(cells)){
     stop(sprintf("No body generated. Body is empty. Try passing information to the body argument. Body XPath was '%s'.", body), call. = FALSE)
   }
 

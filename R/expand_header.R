@@ -7,7 +7,7 @@ expand_header <- function(header.names, header.colspans, header.rowspans){
   repeat{
 
     #Break when there are no header information or when last column is missspecified
-    if(is.empty(header.names[[1]])){break} # || length(header.names) > 1 && length(header.names[[2]]) == 0
+    if(is_empty(header.names[[1]])){break} # || length(header.names) > 1 && length(header.names[[2]]) == 0
 
     header.row <- vector()
 

@@ -17,7 +17,7 @@ span_header <- function(header.names, header.colspans, header.rowspans, headerSe
 
   #Remove rows which have all empty cells
   empty.rows <- which(sapply(header.names, function(x) all(x == "")))
-  if(!is.empty(empty.rows)){
+  if(!is_empty(empty.rows)){
     header.names <- header.names[-empty.rows]
     header.colspans <- header.colspans[-empty.rows]
     header.rowspans <- header.rowspans[-empty.rows]
