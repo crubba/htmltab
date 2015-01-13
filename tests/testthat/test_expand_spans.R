@@ -21,7 +21,7 @@ tab1_code <- '
 test_that("Correctly expanded", {
 
   tab1 <- XML::htmlParse(tab1_code)
-  tab1 <- htmltable(tab1, header = 1:2, body = 3)
+  tab1 <- htmltab(tab1, header = 1:2, body = 3)
 
   expect_that(tab1[,1], equals("1"))
   expect_that(tab1[,2], equals("2"))
@@ -52,7 +52,7 @@ tab2_code <- '<table>
 test_that("Correctly expanded", {
 
   tab2 <- XML::htmlParse(tab2_code)
-  tab2 <- htmltable(tab2, header = 1:2, body = 3)
+  tab2 <- htmltab(tab2, header = 1:2, body = 3)
 
   expect_that(tab2[,1], equals("1"))
   expect_that(tab2[,2], equals("2"))
@@ -87,7 +87,7 @@ tab3_code <- '<table>
 test_that("Correctly expanded", {
 
   tab3 <- XML::htmlParse(tab3_code)
-  tab3 <- htmltable(tab3, header = 1:2, body = 3)
+  tab3 <- htmltab(tab3, header = 1:2, body = 3)
 
   expect_that(tab3[,1], equals("1"))
   expect_that(tab3[,2], equals("2"))
@@ -121,7 +121,7 @@ tab4_code <- '<table>
 test_that("Correctly expanded", {
 
   tab4 <- XML::htmlParse(tab4_code)
-  tab4 <- htmltable(tab4, header = 1:2, body = 3)
+  tab4 <- htmltab(tab4, header = 1:2, body = 3)
 
   expect_that(tab4[,1], equals("1"))
   expect_that(tab4[,2], equals("2"))
@@ -155,7 +155,7 @@ tab5_code <- '<table>
 test_that("Correctly expanded when misspecified header", {
 
   tab5 <- XML::htmlParse(tab5_code)
-  tab5 <- htmltable(tab5, header = 1:2, body = 3)
+  tab5 <- htmltab(tab5, header = 1:2, body = 3)
 
   expect_that(tab5[,1], equals("1"))
   expect_that(tab5[,2], equals("2"))
@@ -194,7 +194,7 @@ tab6_code <- '<table>
 test_that("H: tr/th.td, B: tbody/tr; misspecified rowspan in H", {
 
   tab6 <- XML::htmlParse(tab6_code)
-  tab6 <- htmltable(tab6, header = 1:2)
+  tab6 <- htmltab(tab6, header = 1:2)
 
   expect_that(tab6[,1], equals("1"))
   expect_that(tab6[,2], equals("2"))

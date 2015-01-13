@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_head.R
 \name{get_head}
 \alias{get_head}
-\title{Assemble table head}
+\title{Retrieve table head rows}
 \usage{
 get_head(table.Node, header)
 }
@@ -15,6 +15,6 @@ get_head(table.Node, header)
 the header element
 }
 \description{
-Assemble table head
+Retrieve table head rows
 }
 

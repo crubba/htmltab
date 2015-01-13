@@ -1,2 +1,2 @@
 library(testthat)
-test_check("htmltable")
+test_check("htmltab")

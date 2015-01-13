@@ -4,12 +4,14 @@
 \alias{clean_colnames}
 \title{Produces correct column names}
 \usage{
-clean_colnames(header.name.table = NULL, colNames = NULL)
+clean_colnames(header.name.table = NULL, colNames = NULL, xpath)
 }
 \arguments{
 \item{header.name.table}{the header column names vector}
 
 \item{colNames}{either a self-specificed character vector for the column names or a function used on header.name.table}
+
+\item{xpath}{generated header and body xpath}
 }
 \value{
 a character vector of header column names

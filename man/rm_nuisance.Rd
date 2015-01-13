@@ -4,7 +4,7 @@
 \alias{rm_nuisance}
 \title{Remove nuisance elements}
 \usage{
-rm_nuisance(table.Node, rm_superscript = T, rm_footnotes = T)
+rm_nuisance(table.Node, rm_superscript, rm_footnotes, rm_invisible)
 }
 \arguments{
 \item{table.Node}{the table node}
@@ -12,6 +12,8 @@ rm_nuisance(table.Node, rm_superscript = T, rm_footnotes = T)
 \item{rm_superscript}{logical, denotes whether superscript information should be removed from header and body cells (default value TRUE)}
 
 \item{rm_footnotes}{logical, denotes whether semantic footer information should be removed (default value TRUE)}
+
+\item{rm_invisible}{logical, should nodes that are not visible (display:none attribute) be removed?}
 }
 \value{
 A list of table nodes.
