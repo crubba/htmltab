@@ -1,5 +1,5 @@
 ## htmltab: Hassle-free HTML tables in R
-htmltab is a package for extracting structured information from HTML tables. It is similar to readHTMLTable() of the XML package but provides two major advantages. First, the package automatically expands row and column spans in the header and body cells. Second, users are given more control over the identification of header and body rows which will end up in the R table. Additionally, the function preprocesses table code, removes unneeded parts and so helps to alleviate the need of tedious post-processing.
+htmltab is a package for extracting structured information from HTML tables. It is similar to readHTMLTable() of the XML package but provides two major advantages. First, the package automatically expands row and column spans in the header and body cells. Second, users are given more control over the identification of header and body rows which will end up in the R table. Additionally, the function preprocesses table code, removes unneeded parts and so helps to alleviate the need for tedious post-processing.
 
 ## Installation 
 The package is available from CRAN and Github. For the stable release version, download from CRAN:
