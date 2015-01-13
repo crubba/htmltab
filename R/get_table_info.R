@@ -10,14 +10,12 @@ get_cell_element <- function(cells, tag = "td | th", elFun, rm_escape = NULL) { 
 
   cell.element <- lapply(cells, function(tr) {
     XML::xpathSApply(tr, tag, elFun)
-  }
-  )
+  })
 
   if(!is.null(rm_escape)) {
     cell.element <- lapply(cell.element, function(el) gsub("([[:alpha:]])-[\b\n\t\r]([[:alpha:]])", "\\1\\2", el))
     cell.element <- lapply(cell.element, function(el) gsub("[\b \n \t \r]", rm_escape, el))
   }
-
   return(cell.element)
 }
 
@@ -34,10 +32,8 @@ get_rowspans <- function(cells, tag = "td | th"){
       rs <- XML::xmlGetAttr(node, "rowspan")
       value <- as.numeric(ifelse(is.null(rs), 1, rs))
       return(value)
-    }
-    )
-  }
-  )
+    })
+  })
   return(rowspans)
 }
 
@@ -53,15 +49,9 @@ get_colspans <- function(cells, tag = "td | th"){
     XML::xpathSApply(tr, tag, function(node) {
       cs <- XML::xmlGetAttr(node, "colspan")
       value <- as.numeric(ifelse(is.null(cs), 1, cs))
-#      if(any(is.na(value))){
-#        warning("A colspan value is no integer. Using 1.")
-#        value[is.na(value)] <- 1
-#      }
       return(value)
-    }
-    )
-  }
-  )
+    })
+  })
   return(colspans)
 }
 
@@ -77,11 +67,8 @@ get_header_elements <- function(cells, tag = "td | th"){
       if(XML::xmlName(node) != "sup") {
       value <- XML::xmlValue(node)
       }
-      #value <- as.numeric(ifelse(is.null(value), 1, value))
       return(value)
-    }
-    )
-  }
-  )
+    })
+  })
   return(header_elements)
 }

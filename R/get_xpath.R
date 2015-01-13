@@ -43,12 +43,12 @@ get_head_xpath <- function(table.Node, header){
   }
 
   if (!thead && th){
-    header.xpath <- c("//tr[th and not(./td) and %s]", "./td")
+    header.xpath <- c("//tr[th and not(./td) and %s]", "./td") #
     return(header.xpath)
   }
 
   if (!thead && !th){
-    header.xpath <- c("//tr[position() = 1 and %s]", "not(position() = 1)")
+    header.xpath <- c("//tr[position() = 1]", "not(position() = 1)")
     warning("Neither <thead> nor <th> information found. Taking first table row. If incorrect, specifiy header argument.", call. = FALSE)
     return(header.xpath)
   }
@@ -84,7 +84,7 @@ get_body_xpath <- function(table.Node, body){
     body.xpath <- c("//tbody/tr[%s]", "not(ancestor::tbody)")
     return(body.xpath)
   } else {
-    body.xpath <- c("//tr[./td and %s]", "*")
+    body.xpath <- c("//tr[./td and %s]", "ancestor::table")
     return(body.xpath)
   }
 
