@@ -1,14 +1,16 @@
 #' Produce the table node
 #'
-#' @param doc the HTML document which can be a file name or a URL or an already parsed document (by XML's parsing functions)
-#' @param which a vector of length one for identification of the table in the document. Either a numeric vector for the tables' rank or a character vector that describes an XPath for the table
+#' @param doc the HTML document which can be a file name or a URL or an already parsed document
+#'   (by XML's parsing functions)
+#' @param which a vector of length one for identification of the table in the document. Either
+#'    a numeric vector for the tables' rank or a character vector that describes an XPath for the table
 #' @param ... additional arguments passed to htmlParse
 #' @return a table node
 check_type <- function(doc, which, ...){
 
   #Nodeset
   if(any(class(doc) == "XMLNodeSet")){
-    Node1 <- XML::xmlParse(XML::saveXML(doc[[1]]))
+    Node1 <- eval.parent(substitute(XML::xmlParse(XML::saveXML(doc[[1]]), list(...))))
     return(Node1)
   }
 
@@ -19,7 +21,7 @@ check_type <- function(doc, which, ...){
 
   #URL input
   if(is.character(doc)) {
-    Node <- XML::htmlParse(doc, ...)
+    Node <- eval.parent(substitute(XML::htmlParse(doc, list(...))))
   }
 
   if(!exists("Node")) stop("doc is of unknown type", call. = FALSE)
