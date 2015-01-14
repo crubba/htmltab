@@ -16,7 +16,7 @@ devtools::install_github("crubba/htmltab")
 ```
 
 ## Usage
-To see *htmltab* in action, take a look at the case studies in the [package vignette](http://r-datacollection.com/blog/Hassle-free-data-from-HTML-tables-with-the-htmltable-package/), this [blog post](http://r-datacollection.com/blog/htmltab-Next-version-and-CRAN-release/) or consult the package manual.
+To see *htmltab* in action, take a look at the case studies in the [package vignette](http://cran.r-project.org/web/packages/htmltab/vignettes/htmltab.html), this [blog post](http://r-datacollection.com/blog/htmltab-Next-version-and-CRAN-release/) or consult the package manual.
 
 ## Report issues
 If you experience problems with *htmltab*, I would like to hear about it to improve the project. Please use [my github repo](https://github.com/crubba/htmltab/issues) to report the issue.
