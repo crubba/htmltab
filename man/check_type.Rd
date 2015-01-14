@@ -7,9 +7,11 @@
 check_type(doc, which, ...)
 }
 \arguments{
-\item{doc}{the HTML document which can be a file name or a URL or an already parsed document (by XML's parsing functions)}
+\item{doc}{the HTML document which can be a file name or a URL or an already parsed document
+(by XML's parsing functions)}
 
-\item{which}{a vector of length one for identification of the table in the document. Either a numeric vector for the tables' rank or a character vector that describes an XPath for the table}
+\item{which}{a vector of length one for identification of the table in the document. Either
+a numeric vector for the tables' rank or a character vector that describes an XPath for the table}
 
 \item{...}{additional arguments passed to htmlParse}
 }
