@@ -1,8 +1,31 @@
+CHANGES IN htmltab VERSION 0.6.0
+
+NEW FEATURES
+
+o Added capability to process header information that appear in-table. This is done via a new formula interface to the header argument
+o Added new parameter (rm_whitespace) to remove leading and trailing whitespace from cell values
+o Added new parameter (rm_identical_cols) to remove columns that are falsely copied when colspan attributes are misused
+o Tables are now checked for and cleaned from various types of malformation
+
+BUG FIXES
+
+o Fixed a bug that prevented correct creation of multi-row header when a header cell was completely whitespaces
+o Fixed a bug where rm_empty_cols did not work properly because of values that were created through column expansion
+o Removed unreliable test for documentation examples
+o Automatic check for nested tables. htmltab throws an error when the designated table includes a table
+
+MINOR CHANGES
+
+o In the header construction, multi-row headers are now correctly ignoring empty values in the final header
+o Complementarity checks of header and body rows is now based on a different (and more robust) methodology
+
+
+
 CHANGES IN htmltab VERSION 0.5.0
 
 NEW FEATURES
 
-o Header and body are now treated as complementary elements of a table, i.e. passing (numeric) information about the position of either of the two will be used for the identification of the other.
+o Header and body are now treated as complementary elements of a table, i.e. passing (numeric) information about the position of either of the two will be used for the identification of the other
 o Added a new argument (fillNA) to replace non-data cells cells by NA
 o Added a new argument (rm_nodata_cols) to remove columns that have no apparent data value
 o Added a new argument (rm_invisible) to remove invisible nodes from the table node
@@ -16,5 +39,5 @@ o Fixed problem where a header warning was thrown even when colNames was supplie
 
 MAJOR CHANGES
 
-o Revised code for header and body identification. When an XPath is passed to either of the two, it must treat the parent table node as the root. This change is backward incompatible.
+o Revised code for header and body identification. When an XPath is passed to either of the two, it must treat the parent table node as the root. This change is backward incompatible
 
