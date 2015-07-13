@@ -1,3 +1,5 @@
+![travis status](https://travis-ci.org/crubba/htmltab.svg)
+
 ## htmltab: Hassle-free HTML tables in R
 HTML tables are a valuable data source but extracting and recasting
 these data into a useful format can be tedious. htmltab is a package for
