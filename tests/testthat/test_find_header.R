@@ -21,7 +21,7 @@ tab1_code <- '
 test_that("Correctly identified header 1", {
 
   tab1 <- XML::htmlParse(tab1_code)
-  tab1 <- htmltab(tab1)
+  suppressMessages(tab1 <- htmltab(tab1))
 
   expect_that(tab1[,1], equals("1"))
   expect_that(tab1[,2], equals("2"))
@@ -57,7 +57,7 @@ tab2_code <- '
 test_that("Correctly identified header 2", {
 
   tab2 <- XML::htmlParse(tab2_code)
-  tab2 <- htmltab(tab2)
+  suppressMessages(tab2 <- htmltab(tab2))
 
   expect_that(tab2[,1], equals("1"))
   expect_that(tab2[,2], equals("2"))
@@ -95,7 +95,7 @@ tab3_code <- '<table>
 test_that("Correctly identified header 3", {
 
   tab3 <- XML::htmlParse(tab3_code)
-  tab3 <- htmltab(tab3, fillNA = F)
+  suppressMessages(tab3 <- htmltab(tab3, fillNA = ""))
 
   expect_that(tab3[,1], equals("1"))
   expect_that(tab3[,2], equals("2"))
@@ -131,7 +131,7 @@ tab4_code <- '
 test_that("Correctly identified header 4", {
 
   tab4 <- XML::htmlParse(tab4_code)
-  tab4 <- htmltab(tab4)
+  suppressMessages(tab4 <- htmltab(tab4))
 
   expect_that(tab4[,1], equals("1"))
   expect_that(tab4[,2], equals("2"))
@@ -146,7 +146,7 @@ test_that("Correctly identified header 4", {
 test_that("Correctly identified header 5", {
 
   tab5 <- XML::htmlParse(tab4_code)
-  tab5 <- htmltab(tab5, header = 1:2)
+  suppressMessages(tab5 <- htmltab(tab5, header = 1:2))
 
   expect_that(tab5[,1], equals("1"))
   expect_that(tab5[,2], equals("2"))
@@ -160,7 +160,7 @@ test_that("Correctly identified header 5", {
 test_that("Correctly identified header 6", {
 
   tab6 <- XML::htmlParse(tab4_code)
-  tab6 <- htmltab(tab6, body = 3)
+  suppressMessages(tab6 <- htmltab(tab6, body = 3))
 
   expect_that(tab6[,1], equals("1"))
   expect_that(tab6[,2], equals("2"))
@@ -199,7 +199,7 @@ tab5_code <- '
 test_that("Header info in thead and tbody", {
 
   tab7 <- XML::htmlParse(tab5_code)
-  tab7 <- htmltab(tab7, header = 1:2)
+  suppressMessages(tab7 <- htmltab(tab7, header = 1:2))
 
   expect_that(tab7[,1], equals("1"))
   expect_that(tab7[,2], equals("2"))
@@ -213,7 +213,7 @@ test_that("Header info in thead and tbody", {
 test_that("Correctly identified header 8", {
 
   tab8 <- XML::htmlParse(tab5_code)
-  tab8 <- htmltab(tab8, header = 1:2, body = 3)
+  suppressMessages(tab8 <- htmltab(tab8, header = 1:2, body = 3))
 
   expect_that(tab8[,1], equals("1"))
   expect_that(tab8[,2], equals("2"))

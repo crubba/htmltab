@@ -4,7 +4,7 @@ author: "Christian Rubba"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{htmltab case studies}
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
 ---
@@ -14,13 +14,13 @@ HTML tables are a standard way to display tabular information online. Getting HT
 - Consideration of row and column spans in the HTML table body and header cells
 - More control over the process that translates HTML cells into R table cells
 
-This blog post discusses the application of *htmltab* for two use cases where the package provides a significant improvement over `readHTMLTable()`. 
+This vignette discusses the application of *htmltab* for two use cases where the package provides a significant improvement over `readHTMLTable()`. 
 
 (I make use of the R packages *magrittr*, *tidyr* and *stringr* to process table outputs. Neither of the three is required for running *htmltab*.)
 
 
 ## How to read HTML tables with htmltab()
-The principal function of *htmltab* is (surprise!) `htmltab()`. The behaviour of `htmltab()` is modeled closely after `readHTMLTable()`, and many argument names are identical. Any function call requires passing a value to its _doc_ argument. This value may be of three kinds:
+The principal function of *htmltab* is `htmltab()`. The behaviour of `htmltab()` is modeled closely after `readHTMLTable()`, and many argument names are identical. Any function call requires passing a value to its _doc_ argument. This value may be of three kinds:
 
 1. a URL or file path for the HTML document where the table lives
 2. a parsed HTML object of the entire page of class _HTMLInternalDocument_
@@ -60,24 +60,38 @@ ukLang %>% separate(key, into = c("region", "language", "statistic"), sep = " >>
 `htmltab()` also automatically expands row and column spans when they appear in the table's body. 
 
 ## 2. More control over cell value conversion
-`htmltab()` offers you more control over what part of the HTML table is used in the R table. You can exert this control via `htmltabs()`'s _body_, _header_, _bodyFun_, _headerFun_, _rm&#95;escape_, _rm&#95;footnote_, _rm&#95;superscript_, _rm&#95;nodata&#95;cols_ and _rm&#95;invisible_ arguments. 
+`htmltab()` offers you more control over what part of the HTML table is used in the R table. You can exert this control via `htmltab()`'s _body_, _header_, _bodyFun_, _headerFun_, _rm&#95;escape_, _rm&#95;footnote_, _rm&#95;superscript_, _rm&#95;nodata&#95;cols_, _rm&#95;invisible_ and _rm&#95;whitespace_ arguments. 
 
 ### _body_ and _header_ arguments
-It is not possible for `htmltab()` to correctly identify header and body elements in all the tables. Although there is a semantically *correct* way to organize header and body elements in HTML tables, web designers do not necessarily need to adhere to them to produce visually appealing tables. The *htmltab* package employs reasonable heuristics for identification but they are no guarantee. If you find that the table is not correctly assembled, you can try to give the function more information through its _header_ and _body_ arguments. These arguments are used to pass information about which rows should be used for the contruction of the header and the body. Both accept numeric values for the rows, but a more robust way is to use an XPath that identifies the respective rows. To illustrate, take a look at this [Wikipedia page about the New Zealand General Election in 2002](http://en.wikipedia.org/wiki/New_Zealand_general_election,_2002#Electorate_results). The table uses cells that span the entire column range to classify General and Maori electorates (yellow background). We need to control for this problem explicitly in the assembling stage. I pass the XPath "tr[./td[not(@colspan = '10')]]" to the _body_ argument to explicitly discard all rows from the body that have a \<td\> cell with a colspan attribute of 10:
+It is not possible for `htmltab()` to correctly identify header and body elements in all the tables. Although there is a semantically *correct* way to organize header and body elements in HTML tables, web designers do not necessarily need to adhere to them to produce visually appealing tables. *htmltab* employs heuristics for identification but they are no guarantee. If you find that the table is not correctly assembled, you can try to give the function more information through its _header_ and _body_ arguments. These arguments are used to pass information about which rows should be used for the contruction of the header and the body. Both accept numeric values for the rows, but a more robust way is to use an XPath that identifies the respective rows. To illustrate, take a look at this [Wikipedia page about the New Zealand General Election in 2002](http://en.wikipedia.org/wiki/New_Zealand_general_election,_2002#Electorate_results). The table uses cells that span the entire column range to classify General and Maori electorates (yellow background). We need to control for this problem explicitly in the assembling stage. I pass the XPath "tr[./td[not(@colspan = '10')]]" to the _body_ argument to explicitly discard all rows from the body that have a \<td\> cell with a colspan attribute of 10:
 
 
 ```{r}
 url <- "http://en.wikipedia.org/wiki/New_Zealand_general_election,_2002"
 xp <- "//caption[starts-with(text(), 'Electorate results')]/ancestor::table"
 
-nz1 <- htmltab(doc = url, which = xp, body = "//tr[./td[not(@colspan = '10')]]")
+nz1 <- htmltab(doc = url, which = xp, encoding = "UTF-8")
 head(nz1)
 ```
 
-You might object that ideally these rows should not be discarded, but used for what they are -- variable/header information! The capability to process in-table variables is an issue that I leave for future versions of the package.
+### Using table information that intercept body rows
+In the previous example, we discarded the two intercepting rows in the body which signified the region of the electorate. You might object that ideally these rows should not be discarded, but used for what they are -- variable/header information! As of version 0.6.0, *htmltab* can process these sort of table designs more efficiently and prepend the information accurately in a new column variable. Information to the _header_ argument can now be passed in the form of X1 + X2 + X3 + ..., where X1 codifies the *main* header (i.e. the one that spans the body grid), and X2, X3, ... signify groups of header information that appear in the body. Please note that the in-body information (X2, X3, ...) must not identify row elements (tr) but individual cells (td or th) from which the value of the new variable can be generated (usually from the node value). To illustrate, consider the following snippet:
+
+```{r}
+nz2 <- htmltab(doc = url, which = xp, header = 1 + "//tr/td[@colspan = '10']",
+               body = "//tr[./td[not(@colspan = '10')]]", encoding = "UTF-8")
+```
+
+Here, we pass '1' to signify that the *main* header information appear in the first row. We add to this the XPath "//td[@colspan = '10']" that refer to the two rows. Generally, you are free to use numeric information or XPath to refer to the values that are takes as header variable. *htmltab* extracts these information and prepends them to the main table.
+
+```{r}
+tail(nz2, 9)
+```
+
+For more information on this feature take a look at this [blog post](http://r-datacollection.com/blog/htmltab-v0.6.0/) and the Details section of the *htmltab* function in the package documentation. 
 
 ### Removal of unneeded information
-Many HTML tables include additional information which are of little interest to data analysts such as information encoded in superscript and footnote tags, as well as escape sequences. By default, `htmltab()` removes information from the first two and replaces all escape sequences by a whitespace. You can change this behaviour through the _rm\_superscript_, _rm\_footnotes_, _rm\_escape_, _rm&#95;nodata&#95;cols_ and _rm&#95;invisible_ arguments. 
+Many HTML tables include additional information which are of little interest to data analysts such as information encoded in superscript and footnote tags, as well as escape sequences. By default, `htmltab()` removes information from the first two and replaces all escape sequences by a whitespace. You can change this behaviour through the _rm\_superscript_, _rm\_footnotes_, _rm\_escape_, _rm&#95;nodata&#95;cols_, _rm&#95;invisible_ and _rm&#95;whitespace_ arguments. 
 
 ## Conclusion
 HTML tables are a valuable data source but they frequently violate basic principles of data well-formedness. This is usually for good reason since their primary purpose is to increase readability of tabular information. *htmltab*'s goal is to reduce the need for users to interfere when working with HTML tables by relying on available structural information as well as making some assumptions about the table's design. However, you are free to exert more control over the transformation by specifying various function arguments. 
