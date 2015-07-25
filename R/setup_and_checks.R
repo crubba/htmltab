@@ -35,6 +35,8 @@ check_type.character <- function(doc, which, ...){
   if(url) {
     doc <- httr::GET(doc)
     doc <- httr::content(doc, "text")
+  } else if (file.exists(url)) {
+    doc <- readChar(url, file.info(url)$size)
   }
 
   Node <- eval.parent(substitute(XML::htmlParse(doc, encoding = "UTF-8", list(...))))
