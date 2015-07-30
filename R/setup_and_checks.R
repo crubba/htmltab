@@ -15,7 +15,7 @@ check_type.default <- function(doc, which, ...){
 check_type.XMLNodeSet <- function(doc, which, ...){
 
   Node <- eval.parent(substitute(XML::xmlParse(XML::saveXML(doc[[1]]), list(...))))
-  check_nested_table(Node)
+  #check_nested_table(Node)
 
   return(Node)
 }
@@ -23,7 +23,7 @@ check_type.XMLNodeSet <- function(doc, which, ...){
 check_type.HTMLInternalDocument <- function(doc, which, ...) {
   Node <- doc
   Node <- select_tab(which = which, Node = Node)
-  check_nested_table(Node)
+  #check_nested_table(Node)
 
   return(Node)
 }
@@ -41,7 +41,7 @@ check_type.character <- function(doc, which, ...){
 
   Node <- eval.parent(substitute(XML::htmlParse(doc, encoding = "UTF-8", list(...))))
   Node <- select_tab(which = which, Node = Node)
-  check_nested_table(Node)
+  #check_nested_table(Node)
 
   return(Node)
 }
@@ -131,13 +131,6 @@ eval_body <- function(arg){
   return(body)
 }
 
-#' Check if a table is inside the designated table
-#' @param Node the XML node to be checked
-check_nested_table <- function(Node){
-  nested <- has_tag(Node, "/table//table")
-  ifstop(nested, "There is a table inside the target table. Nested table structures are not supported by htmltab", call. = F)
-}
-
 
 #' Normalizes rows to be nested in tr tags, header in thead, body in tbody and numbers them
 #'
@@ -189,6 +182,18 @@ normalize_tr <- function(table.Node){
 
   }
 
+  # Flatten inside table
+  nested <- has_tag(table.Node, "/table//table")
+  if(nested){
+    warning("There is a table inside the target table. htmltab tries to flatten the inner table", call. = F)
+    invisible(old.node <- XML::getNodeSet(table.Node,  "/table//table"))
+    for(i in 1:length(old.node)){
+      invisible(vals <- XML::xmlValue(old.node[[i]]))
+      invisible(new.cell <- XML::newXMLNode("td", vals))
+      invisible(XML::replaceNodes(oldNode = old.node[[i]], newNode = new.cell))
+    }
+  }
+
   #Add tr index
   trs <- XML::getNodeSet(table.Node, "//tr")
   n.trs <- length(trs)
@@ -217,7 +222,7 @@ rm_nuisance <- function(table.Node, rm_superscript, rm_footnotes, rm_invisible){
   }
 
   if(isTRUE(rm_invisible)){
-    invisible(XML::removeNodes(XML::getNodeSet(table.Node, "//*[@style = 'display:none']")))
+    invisible(XML::removeNodes(XML::getNodeSet(table.Node, "//*[contains(@style, 'display:none') or @class = 'sortkey']")))
   }
 
   # Remove empty rows

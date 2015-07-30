@@ -417,8 +417,6 @@ test_that("Example 3 works", {
 
 test_that("Example 4 works", {
 
-  library(XML)
-
   html_web <- '<table class="wikitable" style="text-align:right;">
 <caption><b>Global desktop and mobile stats combined from <a rel="nofollow" class="external text" href="http://gs.statcounter.com/#all-browser-ww-monthly-200812-201502">StatCounter</a> (Top 5 browsers)</b></caption>
 <tr>
@@ -598,7 +596,7 @@ test_that("Example 4 works", {
   </table>'
 
   bFun <- function(node) {
-    x <- xmlValue(node)
+    x <- XML::xmlValue(node)
     x <- gsub('%$', '', x)
     ifelse(x == '', NA, x)
   }

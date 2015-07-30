@@ -26,7 +26,7 @@ ifstop <- function(cond, mess, ...){
 #' Is str a URL?
 #' @noRd
 is_url <- function(str){
-  grepl("http:|https:|www.", str)
+  grepl("^(http:|https:|www.)", str)
 }
 
 

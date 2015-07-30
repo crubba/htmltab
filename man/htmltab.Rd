@@ -47,7 +47,8 @@ and body cells (default ' ')}
 
 \item{rm_nodata_cols}{logical, should columns that have no alphanumeric data be removed (default TRUE)?}
 
-\item{rm_invisible}{logical, should nodes that are not visible be removed (default TRUE)?}
+\item{rm_invisible}{logical, should nodes that are not visible be removed (default TRUE)? This
+includes elements with class 'sortkey' and 'display:none' style.}
 
 \item{rm_whitespace}{logical, should leading/trailing whitespace be removed from cell values (default TRUE)?}
 

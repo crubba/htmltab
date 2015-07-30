@@ -25,7 +25,8 @@
 #' @param rm_nodata_cols logical, should columns that have no alphanumeric data be removed (default TRUE)?
 #' @param rm_escape a character vector that, if specified, is used to replace escape sequences in header
 #'    and body cells (default ' ')
-#' @param rm_invisible logical, should nodes that are not visible be removed (default TRUE)?
+#' @param rm_invisible logical, should nodes that are not visible be removed (default TRUE)? This
+#' includes elements with class 'sortkey' and 'display:none' style.
 #' @param rm_whitespace logical, should leading/trailing whitespace be removed from cell values (default TRUE)?
 #' @param colNames a character vector of column names, or a function that can be used to replace specific
 #'    column names (default NULL)
