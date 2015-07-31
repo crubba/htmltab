@@ -1,3 +1,14 @@
+CHANGES IN htmltab VERSION 0.6.1
+
+MAJOR CHANGE
+
+o When htmltab encounters an inner table inside the target table, the inner table is flattened to allow table generation
+
+BUG FIXES
+
+o Fixed a problem with reading html files from the local system ()
+
+
 CHANGES IN htmltab VERSION 0.6.0
 
 NEW FEATURES

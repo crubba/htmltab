@@ -15,7 +15,6 @@ check_type.default <- function(doc, which, ...){
 check_type.XMLNodeSet <- function(doc, which, ...){
 
   Node <- eval.parent(substitute(XML::xmlParse(XML::saveXML(doc[[1]]), list(...))))
-  #check_nested_table(Node)
 
   return(Node)
 }
@@ -23,7 +22,6 @@ check_type.XMLNodeSet <- function(doc, which, ...){
 check_type.HTMLInternalDocument <- function(doc, which, ...) {
   Node <- doc
   Node <- select_tab(which = which, Node = Node)
-  #check_nested_table(Node)
 
   return(Node)
 }
@@ -41,7 +39,6 @@ check_type.character <- function(doc, which, ...){
 
   Node <- eval.parent(substitute(XML::htmlParse(doc, encoding = "UTF-8", list(...))))
   Node <- select_tab(which = which, Node = Node)
-  #check_nested_table(Node)
 
   return(Node)
 }
