@@ -164,15 +164,6 @@ htmltab <- function(doc,
 
   # Finish ---------------------------
 
-  #Produce DF
-  tab <- make_colnames(df = tab,
-                       header.names = header.names,
-                       colNames = colNames,
-                       header.xpath = LL$xpath$header)
-
-  #Replace empty vals by NA
-  tab[is.na(tab)] <- fillNA
-
   tab <- as.data.frame(tab, stringsAsFactors = F)
 
   # Inbody header
@@ -180,13 +171,23 @@ htmltab <- function(doc,
                        trindex = LL$trindex$inbody,
                        xpath = LL$xpath$inbody)
 
-  # Subset
-  tab <- tab[LL$trindex$body, ]
+  #Produce DF
+  tab <- make_colnames(df = tab,
+                       header.names = header.names,
+                       colNames = colNames,
+                       header.xpath = LL$xpath$header)
+
 
   #Check if there are no data columns
   if(isTRUE(rm_nodata_cols)){
-    tab <- rm_empty_cols(df = tab)
+    tab <- rm_empty_cols(df = tab, header = header.names)
   }
+
+  # Subset
+  tab <- tab[LL$trindex$body, ]
+
+  # Replace empty vals by NA
+  tab[is.na(tab)] <- fillNA
 
   return(tab)
 }

@@ -1,5 +1,3 @@
-![travis status](https://travis-ci.org/crubba/htmltab.svg)
-
 ## htmltab: Hassle-free HTML tables in R
 HTML tables are a valuable data source but extracting and recasting
 these data into a useful format can be tedious. htmltab is a package for
@@ -27,6 +25,9 @@ devtools::install_github("crubba/htmltab")
 
 ## Usage
 To see *htmltab* in action, take a look at the case studies in the [package vignette](http://cran.r-project.org/web/packages/htmltab/vignettes/htmltab.htm), this [blog post](http://r-datacollection.com/blog/htmltab-Next-version-and-CRAN-release/) or consult the package manual.
+
+## Travis status
+![travis status](https://travis-ci.org/crubba/htmltab.svg)
 
 ## Report issues
 If you experience problems with *htmltab*, I would like to hear about it to improve the project. Please use [my github repo](https://github.com/crubba/htmltab/issues) to report the issue.

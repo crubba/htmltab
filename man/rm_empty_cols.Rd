@@ -4,7 +4,7 @@
 \alias{rm_empty_cols}
 \title{Remove columns which do not have data values}
 \usage{
-rm_empty_cols(df)
+rm_empty_cols(df, header)
 }
 \arguments{
 \item{df}{a data frame}
