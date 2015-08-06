@@ -8,6 +8,8 @@ rm_empty_cols(df, header)
 }
 \arguments{
 \item{df}{a data frame}
+
+\item{header}{the header vector}
 }
 \value{
 a data frame
