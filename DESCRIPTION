@@ -22,7 +22,9 @@ License: MIT + file LICENSE
 LazyData: true
 Suggests:
     testthat,
-    knitr
+    knitr,
+    magrittr,
+    tidyr
 URL: https://github.com/crubba/htmltab
 BugReports: https://github.com/crubba/htmltab/issues
 VignetteBuilder: knitr
