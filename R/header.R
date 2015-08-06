@@ -46,6 +46,13 @@ make_header.numeric <- function(trindex, table.Node, headerSep, headerFun,
                               header.rowspans,
                               headerSep = headerSep)
 
+  noval_col <- which(header.names == "")
+
+  if(length(noval_col) > 0){
+    header.names[noval_col] <- paste0("V", length(noval_col))
+  }
+
+
   return(header.names)
 }
 
@@ -190,7 +197,7 @@ get_span <- function(cells, span, tag = "td | th"){
   span.val <- lapply(cells, function(tr) {
     XML::xpathSApply(tr, tag, function(node) {
       val <- XML::xmlGetAttr(node, span)
-      val <- ifelse(is.null(val) || val == "0", 1, val) #Check Firefox for colspan == 0
+      val <- ifelse(is.null(val) || val == "0" || grepl("%", val), 1, val) #Check Firefox for colspan == 0
       val <- as.numeric(val)
       return(val)
     })

@@ -234,22 +234,28 @@ rm_nuisance <- function(table.Node, rm_superscript, rm_footnotes, rm_invisible){
 #' @param df a data frame
 #' @return a data frame
 #' @seealso \code{\link{rm_nuisance}}
-rm_empty_cols <- function(df){
+rm_empty_cols <- function(df, header){
 
   #This is clumsy but seems to work reasonably well
   #columns are removed when they have:
   #1. No name (V...)
   #2. More than 50% missing values in their column
 
-  no.col.name <- grep('^V[[:digit:]]', colnames(df))
+#  no.col.name <- grep('^V[[:digit:]]', colnames(df))
 
-  empty.cols <- sapply(df, function(col){
-    x <- grepl("[A-Za-z]{1,}", col)
-    x <- length(base::which(x, TRUE)) / length(x)
+  empty.cols <- sapply(df, function(x) {
+    gg <- is.na(x)
+    gg <- length(base::which(gg, TRUE)) / length(x)
   })
 
-  empty.cols <- which(empty.cols < 0.5)
-  rm.these <- intersect(empty.cols, no.col.name)
+
+#   empty.cols <- sapply(df, function(col){
+#     x <- grepl("[A-Za-z]{1,}", col)
+#     x <- length(base::which(x, TRUE)) / length(x)
+#   })
+
+  empty.cols <- which(empty.cols > 0.5)
+  rm.these <- empty.cols #intersect(empty.cols, no.col.name)
 
   if(length(rm.these) > 0) {
     df <- df[, -rm.these]
@@ -259,3 +265,33 @@ rm_empty_cols <- function(df){
 }
 
 
+
+#
+# #' Remove columns which do not have data values
+# #'
+# #' @param df a data frame
+# #' @return a data frame
+# #' @seealso \code{\link{rm_nuisance}}
+# rm_empty_cols <- function(df){
+#
+#   #This is clumsy but seems to work reasonably well
+#   #columns are removed when they have:
+#   #1. No name (V...)
+#   #2. More than 50% missing values in their column
+#
+#   no.col.name <- grep('^V[[:digit:]]', colnames(df))
+#
+#   empty.cols <- sapply(df, function(col){
+#     x <- grepl("[A-Za-z]{1,}", col)
+#     x <- length(base::which(x, TRUE)) / length(x)
+#   })
+#
+#   empty.cols <- which(empty.cols < 0.5)
+#   rm.these <- intersect(empty.cols, no.col.name)
+#
+#   if(length(rm.these) > 0) {
+#     df <- df[, -rm.these]
+#   }
+#
+#   return(df)
+# }

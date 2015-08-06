@@ -172,6 +172,9 @@ get_body_xpath.NULL <- function(body, table.Node){
 #' @return a character vector of XPath statements
 identify_elements <- function(table.Node, header, body, complementary = T){
 
+  #header <- ev_header
+  #body <- ev_body
+
   header_MAIN <- header[[1]]
   header_INBODY <- header[-1]
 

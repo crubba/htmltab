@@ -18,7 +18,7 @@ make_colnames <- function(df, header.names = NULL, colNames = NULL, header.xpath
       warning("Header dimension doesn't match body dimension", call. = FALSE)
       colnames(df) <- vector()
     }
-    colnames(df) <- header.names
+    colnames(df)[1:length(header.names)] <- header.names
     return(df)
   }
 
@@ -28,7 +28,7 @@ make_colnames <- function(df, header.names = NULL, colNames = NULL, header.xpath
       warning("Header dimension doesn't match body dimension", call. = FALSE)
       colnames(df) <- vector()
     }
-    colnames(df) <- header.names
+    colnames(df)[1:length(header.names)] <- header.names
     return(df)
   }
 
@@ -38,7 +38,8 @@ make_colnames <- function(df, header.names = NULL, colNames = NULL, header.xpath
       warning("Header dimension doesn't match body dimension", call. = FALSE)
       colnames(df) <- vector()
     }
-    colnames(df) <- header.names
+    colnames(df)[1:length(header.names)] <- header.names
+    return(df)
   }
 
 }

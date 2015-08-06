@@ -207,6 +207,7 @@ test_that("H: tr/th.td, B: tbody/tr; misspecified rowspan in H", {
   expect_that(colnames(tab6)[4], equals("c"))
 })
 
+
 stack <- '<html>
   <head>
   <title>My First Webpage</title>

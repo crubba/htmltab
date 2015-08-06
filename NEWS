@@ -1,3 +1,10 @@
+CHANGES IN htmltab VERSION 0.6.2
+
+BUG FIXES
+
+o When the last column had misspecified column spans, htmltab previously dicarded an entire column. Now, a check is in place that makes a judgement whether a column should be kept or not
+
+
 CHANGES IN htmltab VERSION 0.6.1
 
 MAJOR CHANGE
