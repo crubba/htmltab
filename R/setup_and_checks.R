@@ -232,8 +232,9 @@ rm_nuisance <- function(table.Node, rm_superscript, rm_footnotes, rm_invisible){
 #' Remove columns which do not have data values
 #'
 #' @param df a data frame
+#' @param header the header vector
 #' @return a data frame
-#' @seealso \code{\link{rm_nuisance}}
+#' @seealso \code{\link{rm_nuisance}, \link{rm_nodata_rows}}
 rm_empty_cols <- function(df, header){
 
   #This is clumsy but seems to work reasonably well
@@ -248,17 +249,26 @@ rm_empty_cols <- function(df, header){
     gg <- length(base::which(gg, TRUE)) / length(x)
   })
 
-
-#   empty.cols <- sapply(df, function(col){
-#     x <- grepl("[A-Za-z]{1,}", col)
-#     x <- length(base::which(x, TRUE)) / length(x)
-#   })
-
   empty.cols <- which(empty.cols > 0.5)
   rm.these <- empty.cols #intersect(empty.cols, no.col.name)
 
   if(length(rm.these) > 0) {
     df <- df[, -rm.these]
+  }
+
+  return(df)
+}
+
+#' Remove rows which do not have data values
+#'
+#' @param df a data frame
+#' @return a data frame
+#' @seealso \code{\link{rm_nuisance}, \link{rm_nodata_cols}}
+rm_empty_rows <- function(df){
+  rm.these <- which(rowSums(is.na(df)) == ncol(df))
+
+  if(length(rm.these) > 0) {
+    df <- df[-rm.these,]
   }
 
   return(df)

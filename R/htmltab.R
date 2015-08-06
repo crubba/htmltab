@@ -23,6 +23,7 @@
 #'    (default TRUE)?
 #' @param rm_footnotes logical, should semantic footer information be removed (default TRUE)?
 #' @param rm_nodata_cols logical, should columns that have no alphanumeric data be removed (default TRUE)?
+#' @param rm_nodata_rows logical, should rows that have no alphanumeric data be removed (default TRUE)?
 #' @param rm_escape a character vector that, if specified, is used to replace escape sequences in header
 #'    and body cells (default ' ')
 #' @param rm_invisible logical, should nodes that are not visible be removed (default TRUE)? This
@@ -106,6 +107,7 @@ htmltab <- function(doc,
                     rm_escape = " ",
                     rm_footnotes = T,
                     rm_nodata_cols = T,
+                    rm_nodata_rows = T,
                     rm_invisible = T,
                     rm_whitespace = T,
                     colNames = NULL,
@@ -177,14 +179,18 @@ htmltab <- function(doc,
                        colNames = colNames,
                        header.xpath = LL$xpath$header)
 
-
-  #Check if there are no data columns
+  #Check if there are no data columns/rows
   if(isTRUE(rm_nodata_cols)){
     tab <- rm_empty_cols(df = tab, header = header.names)
   }
 
   # Subset
   tab <- tab[LL$trindex$body, ]
+
+  if(isTRUE(rm_nodata_rows)){
+    tab <- rm_empty_rows(df = tab)
+  }
+
 
   # Replace empty vals by NA
   tab[is.na(tab)] <- fillNA

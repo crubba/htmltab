@@ -8,8 +8,8 @@ htmltab(doc, which = NULL, header = NULL, headerFun = function(node)
   XML::xmlValue(node), headerSep = " >> ", body = NULL,
   bodyFun = function(node) XML::xmlValue(node), complementary = T,
   fillNA = NA, rm_superscript = T, rm_escape = " ", rm_footnotes = T,
-  rm_nodata_cols = T, rm_invisible = T, rm_whitespace = T,
-  colNames = NULL, ...)
+  rm_nodata_cols = T, rm_nodata_rows = T, rm_invisible = T,
+  rm_whitespace = T, colNames = NULL, ...)
 }
 \arguments{
 \item{doc}{the HTML document which can be a file name or a URL or an already parsed document
@@ -46,6 +46,8 @@ and body cells (default ' ')}
 \item{rm_footnotes}{logical, should semantic footer information be removed (default TRUE)?}
 
 \item{rm_nodata_cols}{logical, should columns that have no alphanumeric data be removed (default TRUE)?}
+
+\item{rm_nodata_rows}{logical, should rows that have no alphanumeric data be removed (default TRUE)?}
 
 \item{rm_invisible}{logical, should nodes that are not visible be removed (default TRUE)? This
 includes elements with class 'sortkey' and 'display:none' style.}

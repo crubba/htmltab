@@ -18,6 +18,6 @@ a data frame
 Remove columns which do not have data values
 }
 \seealso{
-\code{\link{rm_nuisance}}
+\code{\link{rm_nuisance}, \link{rm_nodata_rows}}
 }
 

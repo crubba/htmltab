@@ -1,6 +1,6 @@
 Package: htmltab
 Title: Assemble Data Frames from HTML Tables
-Version: 0.6.2
+Version: 0.6.3
 Authors@R: person("Christian", "Rubba", email = "christian.rubba@gmail.com",
   role = c("aut", "cre"))
 Description: HTML tables are a valuable data source but extracting and recasting
