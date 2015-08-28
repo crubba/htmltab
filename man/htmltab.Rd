@@ -6,10 +6,11 @@
 \usage{
 htmltab(doc, which = NULL, header = NULL, headerFun = function(node)
   XML::xmlValue(node), headerSep = " >> ", body = NULL,
-  bodyFun = function(node) XML::xmlValue(node), complementary = T,
-  fillNA = NA, rm_superscript = T, rm_escape = " ", rm_footnotes = T,
-  rm_nodata_cols = T, rm_nodata_rows = T, rm_invisible = T,
-  rm_whitespace = T, colNames = NULL, ...)
+  bodyFun = function(node) XML::xmlValue(node), complementary = TRUE,
+  fillNA = NA, rm_superscript = TRUE, rm_escape = " ",
+  rm_footnotes = TRUE, rm_nodata_cols = TRUE, rm_nodata_rows = TRUE,
+  rm_invisible = TRUE, rm_whitespace = TRUE, colNames = NULL,
+  develop = FALSE, ...)
 }
 \arguments{
 \item{doc}{the HTML document which can be a file name or a URL or an already parsed document

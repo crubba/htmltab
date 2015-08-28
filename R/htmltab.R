@@ -101,16 +101,17 @@ htmltab <- function(doc,
                     headerSep = " >> ",
                     body = NULL,
                     bodyFun = function(node)XML::xmlValue(node),
-                    complementary = T,
+                    complementary = TRUE,
                     fillNA = NA,
-                    rm_superscript = T,
+                    rm_superscript = TRUE,
                     rm_escape = " ",
-                    rm_footnotes = T,
-                    rm_nodata_cols = T,
-                    rm_nodata_rows = T,
-                    rm_invisible = T,
-                    rm_whitespace = T,
+                    rm_footnotes = TRUE,
+                    rm_nodata_cols = TRUE,
+                    rm_nodata_rows = TRUE,
+                    rm_invisible = TRUE,
+                    rm_whitespace = TRUE,
                     colNames = NULL,
+                    develop = FALSE,
                     ...){
 
   # Deparse
@@ -185,7 +186,7 @@ htmltab <- function(doc,
   }
 
   # Subset
-  tab <- tab[LL$trindex$body, ]
+  tab <- tab[LL$trindex$body, , drop = F]
 
   if(isTRUE(rm_nodata_rows)){
     tab <- rm_empty_rows(df = tab)
@@ -195,5 +196,6 @@ htmltab <- function(doc,
   # Replace empty vals by NA
   tab[is.na(tab)] <- fillNA
 
+  #if(isTRUE(develop)) on.exit(print(table.Node))
   return(tab)
 }
