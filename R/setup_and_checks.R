@@ -26,11 +26,18 @@ check_type.HTMLInternalDocument <- function(doc, which, ...) {
   return(Node)
 }
 
+check_type.XMLInternalElementNode <- function(doc, which, ...) {
+  Node <- doc
+  Node <- select_tab(which = which, Node = Node)
+
+  return(Node)
+}
+
 check_type.character <- function(doc, which, ...){
 
-  url <- is_url(doc)
+  isurl <- is_url(doc)
 
-  if(url) {
+  if(isurl) {
     doc <- httr::GET(doc)
     doc <- httr::content(doc, "text")
   } else if (file.exists(doc)) {
