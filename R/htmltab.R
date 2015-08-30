@@ -87,12 +87,16 @@
 #'  htmltab(doc = doc, which = xp3, bodyFun = bFun)
 #'
 #'
+#' htmltab("https://en.wikipedia.org/wiki/Arjen_Robben", which = 3,
+#' header = 1:2)
+#'
+#'
 #' #When header information appear throughout the body, you can specify their
 #' #position in the header formula
 #'
-#' htmltab("https://en.wikipedia.org/wiki/Arjen_Robben", which = 3,
-#' header = 1:2 + "//tr/th[@@colspan='3' and not(contains(text(), 'Club'))]")
+#' htmltab(url, which = "//table[@@id='team_gamelogs']", header = . + "//td[./strong]")
 #' }
+
 
 htmltab <- function(doc,
                     which = NULL,
@@ -113,6 +117,11 @@ htmltab <- function(doc,
                     colNames = NULL,
                     develop = FALSE,
                     ...){
+
+  # on exit
+#   if(isTRUE(develop)){
+#     on.exit(print(Node))
+#   }
 
   # Deparse
   header <- deparse(substitute(header), width.cutoff = 500L)

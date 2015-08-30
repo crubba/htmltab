@@ -117,11 +117,14 @@ htmltab(doc = doc, which = xp2, header = 0, encoding = "UTF-8", colNames = c("na
  htmltab(doc = doc, which = xp3, bodyFun = bFun)
 
 
+htmltab("https://en.wikipedia.org/wiki/Arjen_Robben", which = 3,
+header = 1:2)
+
+
 #When header information appear throughout the body, you can specify their
 #position in the header formula
 
-htmltab("https://en.wikipedia.org/wiki/Arjen_Robben", which = 3,
-header = 1:2 + "//tr/th[@colspan='3' and not(contains(text(), 'Club'))]")
+htmltab(url, which = "//table[@id='team_gamelogs']", header = . + "//td[./strong]")
 }
 }
 \author{
