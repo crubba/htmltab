@@ -78,6 +78,9 @@ span_body <- function(vals, colspans, rowspans, header.names) {
 
 
 
+#colspans = body.colspans
+#rowspans = body.rowspans
+
 #' Expand the body
 #' @noRd
 expand_body <- function(vals, colspans, rowspans){
@@ -92,7 +95,7 @@ expand_body <- function(vals, colspans, rowspans){
   repeat{
 
     #Break when there are no header information or when last column is missspecified
-    if(is_empty(vals[[1]])){break} # || length(vals) > 1 && length(vals[[2]]) == 0
+    if(is_empty(vals[[1]])){break} #all_empty(vals)
 
     body.row <- vector()
 

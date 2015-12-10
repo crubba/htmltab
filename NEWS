@@ -1,53 +1,34 @@
-CHANGES IN htmltab VERSION 0.6.4
+CHANGES IN htmltab VERSION 0.7.0
 
-BUG FIXES
-
-o Single column data frames are not reduced to vectors anymore which used to resulte in an error
-
-
-CHANGES IN htmltab VERSION 0.6.3
 
 NEW FEATURES
-
 o Added a new argument (rm_nodata_cols) to remove columns that have no apparent data value
 
-
-CHANGES IN htmltab VERSION 0.6.2
-
-BUG FIXES
-
-o When the last column had misspecified column spans, htmltab previously dicarded an entire column. Now, a check is in place that makes a judgement whether a column should be kept or not
-
-
-CHANGES IN htmltab VERSION 0.6.1
-
 MAJOR CHANGE
-
 o When htmltab encounters an inner table inside the target table, the inner table is flattened to allow table generation
 
 BUG FIXES
-
+o Single column data frames are not reduced to vectors anymore which used to resulte in an error
+o When the last column had misspecified column spans, htmltab previously dicarded an entire column. Now, a check is in place that makes a judgement whether a column should be kept or not
 o Fixed a problem with reading html files from the local file system (@earino)
+
 
 
 CHANGES IN htmltab VERSION 0.6.0
 
 NEW FEATURES
-
 o Added capability to process header information that appear in-table. This is done via a new formula interface to the header argument
 o Added new parameter (rm_whitespace) to remove leading and trailing whitespace from cell values
 o Added new parameter (rm_identical_cols) to remove columns that are falsely copied when colspan attributes are misused
 o Tables are now checked for and cleaned from various types of malformation
 
 BUG FIXES
-
 o Fixed a bug that prevented correct creation of multi-row header when a header cell was completely whitespaces
 o Fixed a bug where rm_empty_cols did not work properly because of values that were created through column expansion
 o Removed unreliable test for documentation examples
 o Automatic check for nested tables. htmltab throws an error when the designated table includes a table
 
 MINOR CHANGES
-
 o In the header construction, multi-row headers are now correctly ignoring empty values in the final header
 o Complementarity checks of header and body rows is now based on a different (and more robust) methodology
 
@@ -56,20 +37,17 @@ o Complementarity checks of header and body rows is now based on a different (an
 CHANGES IN htmltab VERSION 0.5.0
 
 NEW FEATURES
-
 o Header and body are now treated as complementary elements of a table, i.e. passing (numeric) information about the position of either of the two will be used for the identification of the other
 o Added a new argument (fillNA) to replace non-data cells cells by NA
 o Added a new argument (rm_nodata_cols) to remove columns that have no apparent data value
 o Added a new argument (rm_invisible) to remove invisible nodes from the table node
 
 BUG FIXES
-
 o Fixed a problem where htmltable failed when a table didn't nest a row within tr tags. Now every table is controlled, and tr tags are added when necessary
 o Fixed a small problem with misspecified spans in the table header
 o Added meaningful error message when table couldn't be identified
 o Fixed problem where a header warning was thrown even when colNames was supplied
 
 MAJOR CHANGES
-
 o Revised code for header and body identification. When an XPath is passed to either of the two, it must treat the parent table node as the root. This change is backward incompatible
 

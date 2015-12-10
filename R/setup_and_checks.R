@@ -241,7 +241,7 @@ rm_nuisance <- function(table.Node, rm_superscript, rm_footnotes, rm_invisible){
 #' @param df a data frame
 #' @param header the header vector
 #' @return a data frame
-#' @seealso \code{\link{rm_nuisance}, \link{rm_nodata_rows}}
+#' @seealso \code{\link{rm_nuisance}, \link{rm_empty_rows}}
 rm_empty_cols <- function(df, header){
 
   #This is clumsy but seems to work reasonably well
@@ -257,10 +257,11 @@ rm_empty_cols <- function(df, header){
   })
 
   empty.cols <- which(empty.cols > 0.5)
+  if(length(empty.cols) > 0) warning(sprintf("Columns [%s] seem to have no data and are removed. Use rm_nodata_cols = F to suppress this behavior", paste(names(empty.cols), collapse = ",")), call. =  F)
   rm.these <- empty.cols #intersect(empty.cols, no.col.name)
 
   if(length(rm.these) > 0) {
-    df <- df[, -rm.these]
+    df <- df[, -rm.these, drop = F]
   }
 
   return(df)
@@ -270,7 +271,7 @@ rm_empty_cols <- function(df, header){
 #'
 #' @param df a data frame
 #' @return a data frame
-#' @seealso \code{\link{rm_nuisance}, \link{rm_nodata_cols}}
+#' @seealso \code{\link{rm_nuisance}, \link{rm_empty_cols}}
 rm_empty_rows <- function(df){
   rm.these <- which(rowSums(is.na(df)) == ncol(df))
 

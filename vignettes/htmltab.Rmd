@@ -16,7 +16,7 @@ HTML tables are a standard way to display tabular information online. Getting HT
 
 This vignette discusses the application of *htmltab* for two use cases where the package provides a significant improvement over `readHTMLTable()`. 
 
-(I make use of the R packages *magrittr*, *tidyr* and *stringr* to process table outputs. Neither of the three is required for running *htmltab*.)
+(I make use of the R packages *tidyr* and *stringr* to process table outputs. Neither of the three is required for running *htmltab*.)
 
 
 ## How to read HTML tables with htmltab()
@@ -45,16 +45,16 @@ The header information has been recast into a format that respects the hierarchi
 
 ```{r message=FALSE}
 library(tidyr)
-library(magrittr)
 
-ukLang %<>% gather(key, value, -Ability)
+ukLang <- gather(ukLang, key, value, -Ability)
 ```
 
 This statement restructures the variables in a more useful long format. From this we can separate the variables using an appropriate regular expression such as " >> ". 
 
 
 ```{r}
-ukLang %>% separate(key, into = c("region", "language", "statistic"), sep = " >> ") %>% head
+ukLang <- separate(ukLang, key, into = c("region", "language", "statistic"), sep = " >> ")
+head(ukLang)
 ```
 
 `htmltab()` also automatically expands row and column spans when they appear in the table's body. 
@@ -63,14 +63,15 @@ ukLang %>% separate(key, into = c("region", "language", "statistic"), sep = " >>
 `htmltab()` offers you more control over what part of the HTML table is used in the R table. You can exert this control via `htmltab()`'s _body_, _header_, _bodyFun_, _headerFun_, _rm&#95;escape_, _rm&#95;footnote_, _rm&#95;superscript_, _rm&#95;nodata&#95;cols_, _rm&#95;invisible_ and _rm&#95;whitespace_ arguments. 
 
 ### _body_ and _header_ arguments
-It is not possible for `htmltab()` to correctly identify header and body elements in all the tables. Although there is a semantically *correct* way to organize header and body elements in HTML tables, web designers do not necessarily need to adhere to them to produce visually appealing tables. *htmltab* employs heuristics for identification but they are no guarantee. If you find that the table is not correctly assembled, you can try to give the function more information through its _header_ and _body_ arguments. These arguments are used to pass information about which rows should be used for the contruction of the header and the body. Both accept numeric values for the rows, but a more robust way is to use an XPath that identifies the respective rows. To illustrate, take a look at this [Wikipedia page about the New Zealand General Election in 2002](http://en.wikipedia.org/wiki/New_Zealand_general_election,_2002#Electorate_results). The table uses cells that span the entire column range to classify General and Maori electorates (yellow background). We need to control for this problem explicitly in the assembling stage. I pass the XPath "tr[./td[not(@colspan = '10')]]" to the _body_ argument to explicitly discard all rows from the body that have a \<td\> cell with a colspan attribute of 10:
+It is not possible for `htmltab()` to correctly identify header and body elements in all the tables. Although there is a semantically *correct* way to organize header and body elements in HTML tables, web designers do not necessarily need to adhere to them to produce visually appealing tables. *htmltab* employs heuristics for identification but they are no guarantee. If you find that the table is not correctly assembled, you can try to give the function more information through its _header_ and _body_ arguments. These arguments are used to pass information about which rows should be used for the contruction of the header and the body. Both accept numeric values for the rows, but a more robust way is to use an XPath that identifies the respective rows. To illustrate, take a look at this [Wikipedia page about the New Zealand General Election in 2002](http://en.wikipedia.org/wiki/New_Zealand_general_election,_2002#Electorate_results). The table uses cells that span the entire column range to classify General and Maori electorates (yellow background). We need to control for this problem explicitly in the assembling stage. I pass the XPath "//tr[./td[not(@colspan = '10')]]" to the _body_ argument to explicitly discard all rows from the body that have a \<td\> cell with a colspan attribute of 10:
 
 
 ```{r}
 url <- "http://en.wikipedia.org/wiki/New_Zealand_general_election,_2002"
 xp <- "//caption[starts-with(text(), 'Electorate results')]/ancestor::table"
+body_xp <- "//tr[./td[not(@colspan = '10')]]"
 
-nz1 <- htmltab(doc = url, which = xp, encoding = "UTF-8")
+nz1 <- htmltab(doc = url, which = xp, body = body_xp, encoding = "UTF-8")
 head(nz1)
 ```
 

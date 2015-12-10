@@ -1,5 +1,9 @@
 is_empty <- function(x) length(x) == 0
 
+all_empty <- function(x) {
+  all(sapply(x, length) == 0)
+  }
+
 equal_length <- function(x) {
   x.length <- sapply(x, length)
   length(unique(x.length)) == 1

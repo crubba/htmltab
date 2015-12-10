@@ -174,6 +174,13 @@ get_cell_element <- function(cells, tag = "td | th", elFun, rm_escape, rm_whites
     XML::xpathSApply(tr, tag, elFun)
   })
 
+#   cell.element <-
+#
+#     lapply(cells, function(tr) {
+#     x <- XML::xmlValue(tr, tag, function(x) paste(xmlValue(x), sep = "||"))
+#     #sapply(x, xmlValue, recursive = F)
+#   })
+
   if(!is.null(rm_escape)) {
     cell.element <- lapply(cell.element, function(el) gsub("([[:alpha:]])-[\b\n\t\r]([[:alpha:]])", "\\1\\2", el))
     cell.element <- lapply(cell.element, function(el) gsub("[\b \n \t \r]", rm_escape, el))

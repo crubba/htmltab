@@ -55,7 +55,8 @@
 #' @references \url{https://github.com/crubba/htmltab}
 #' @examples
 #' \dontrun{
-#'# When no spans are present, htmltab produces output identical to XML's readHTMLTable()
+#'# When no spans are present, htmltab produces output close to XML's readHTMLTable(),
+#'but it removes many types of non-data elements (footnotes, non-visible HTML elements, etc)
 #'
 #'  url <- "http://en.wikipedia.org/wiki/World_population"
 #'  xp <- "//caption[starts-with(text(),'World historical')]/ancestor::table"
@@ -115,12 +116,11 @@ htmltab <- function(doc,
                     rm_invisible = TRUE,
                     rm_whitespace = TRUE,
                     colNames = NULL,
-                    develop = FALSE,
                     ...){
 
   # on exit
 #   if(isTRUE(develop)){
-#     on.exit(print(Node))
+#     on.exit(print(table.Node))
 #   }
 
   # Deparse
@@ -178,16 +178,16 @@ htmltab <- function(doc,
 
   tab <- as.data.frame(tab, stringsAsFactors = F)
 
-  # Inbody header
-  tab <- create_inbody(tab = tab, table.Node = table.Node,
-                       trindex = LL$trindex$inbody,
-                       xpath = LL$xpath$inbody)
-
   #Produce DF
   tab <- make_colnames(df = tab,
                        header.names = header.names,
                        colNames = colNames,
                        header.xpath = LL$xpath$header)
+
+  # Inbody header
+  tab <- create_inbody(tab = tab, table.Node = table.Node,
+                       trindex = LL$trindex$inbody,
+                       xpath = LL$xpath$inbody)
 
   #Check if there are no data columns/rows
   if(isTRUE(rm_nodata_cols)){
@@ -205,6 +205,5 @@ htmltab <- function(doc,
   # Replace empty vals by NA
   tab[is.na(tab)] <- fillNA
 
-  #if(isTRUE(develop)) on.exit(print(table.Node))
   return(tab)
 }
