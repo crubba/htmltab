@@ -44,7 +44,11 @@ check_type.character <- function(doc, which, ...){
     doc <- readChar(doc, file.info(doc)$size)
   }
 
-  Node <- eval.parent(substitute(XML::htmlParse(doc, encoding = "UTF-8", list(...))))
+  params <- list(...)
+  if (is.null(params$encoding)) {
+    params$encoding <- "UTF-8"
+  }
+  Node <- eval.parent(substitute(XML::htmlParse(doc, params)))
   Node <- select_tab(which = which, Node = Node)
 
   return(Node)

@@ -117,7 +117,7 @@ get_head_xpath.NULL <- function(header, table.Node){
 
   if (!thead && !th){
     header.xpath <- "//tr[position() = 1]"
-    message("Neither <thead> nor <th> information found. Taking first table row for the header. If incorrect, specifiy header argument.")
+    message("Neither <thead> nor <th> information found. Taking first table row for the header. If incorrect, specify header argument.")
     return(c(header.xpath))
   }
 }
