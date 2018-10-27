@@ -41,7 +41,7 @@ num_xpath.list <- function(data){
 get_trindex <- function(xpath, table.Node) UseMethod("get_trindex")
 
 get_trindex.default <- function(xpath, table.Node){
-  stop("Unknow XPath", call. = FALSE)
+  stop("Unknown XPath.", call. = FALSE)
 }
 
 get_trindex.NULL <- function(xpath, table.Node){
@@ -117,7 +117,7 @@ get_head_xpath.NULL <- function(header, table.Node){
 
   if (!thead && !th){
     header.xpath <- "//tr[position() = 1]"
-    message("Neither <thead> nor <th> information found. Taking first table row for the header. If incorrect, specifiy header argument.")
+    message("Neither <thead> nor <th> information found. Taking first table row for the header. If incorrect, specify header argument.")
     return(c(header.xpath))
   }
 }
@@ -131,7 +131,7 @@ get_head_xpath.NULL <- function(header, table.Node){
 get_body_xpath <- function(body, table.Node) UseMethod("get_body_xpath")
 
 get_body_xpath.default <- function(body, table.Node){
-  stop("Unknow body information", .call = F)
+  stop("Unknown body information.", .call = F)
 }
 
 get_body_xpath.numeric <- function(body, table.Node){
