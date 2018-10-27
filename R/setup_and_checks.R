@@ -77,7 +77,7 @@ select_tab.numeric <- function(which, Node){
   Node <- XML::getNodeSet(Node, path = "//table")
 
   ifstop(cond = length(Node) < which,
-         mess = "Couldn't find the table. Try passing (a different) information to the which argument.")
+         mess = "Couldn't find the table. Try passing (different) information to the which argument.")
 
   Node <- XML::xmlParse(XML::saveXML(Node[[which]]))
   return(Node)
@@ -89,7 +89,7 @@ select_tab.character <- function(which, Node){
   Node <- XML::getNodeSet(Node, path = xpath)
 
   ifstop(cond = is.null(Node[[1]]),
-         mess = "Couldn't find the table. Try passing (a different) information to the which argument.")
+         mess = "Couldn't find the table. Try passing (different) information to the which argument.")
 
   Node <- XML::xmlParse(XML::saveXML(Node[[1]]))
   return(Node)
@@ -109,7 +109,7 @@ eval_header <- function(arg){
 
   # Check that inbody information are complete
   ifstop(cond = any(header[-1] == "NULL"),
-         mess = "You need to provide complete information for the inbody rows")
+         mess = "You need to provide complete information for the inbody rows.")
 
   # Evaluate header information
   header <- lapply(header, function(x) eval(parse(text = x)))
@@ -127,7 +127,7 @@ eval_body <- function(arg){
   body[those.body] <- "NULL"
 
   ifstop(cond = length(body) > 1,
-         mess = "Your body information is malformed. You may only provide one piece of information")
+         mess = "Your body information is malformed. You may only provide one piece of information.")
 
   # Evaluate header information
   body <- eval(parse(text = body))
@@ -257,7 +257,7 @@ rm_empty_cols <- function(df, header){
   })
 
   empty.cols <- which(empty.cols > 0.5)
-  if(length(empty.cols) > 0) warning(sprintf("Columns [%s] seem to have no data and are removed. Use rm_nodata_cols = F to suppress this behavior", paste(names(empty.cols), collapse = ",")), call. =  F)
+  if(length(empty.cols) > 0) warning(sprintf("Columns [%s] seem to have no data and are removed. Use rm_nodata_cols = F to suppress this behavior.", paste(names(empty.cols), collapse = ",")), call. =  F)
   rm.these <- empty.cols #intersect(empty.cols, no.col.name)
 
   if(length(rm.these) > 0) {
